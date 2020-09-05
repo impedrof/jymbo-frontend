@@ -1,0 +1,167 @@
+<div class="background-login">
+  <div class="container-login-cadastro">
+    <form
+      class="login"
+      *ngIf="!cadastroOpen"
+      [formGroup]="loginForm"
+      (ngSubmit)="logarUsuario()"
+    >
+      <div class="titulo-login">
+        <span>Entre com seu Usuário</span>
+        <div class="logo"></div>
+      </div>
+
+      <div class="campos">
+        <div class="input-text">
+          <label for="Email">Email</label>
+          <input type="text" name="Email" id="Email" formControlName="email" />
+          <span
+            class="error-campo"
+            *ngIf="
+              loginForm.controls.email.errors && loginForm.controls.email.dirty
+            "
+          >
+            Informe o email
+          </span>
+        </div>
+
+        <div class="input-text">
+          <label for="senha">Senha</label>
+          <input
+            type="password"
+            name="senha"
+            id="senha"
+            formControlName="senha"
+          />
+          <span
+            class="error-campo"
+            *ngIf="
+              loginForm.controls.senha.errors && loginForm.controls.senha.dirty
+            "
+          >
+            Informe a senha
+          </span>
+        </div>
+      </div>
+
+      <div id="text-error" *ngIf="!!hasErrorLogin" class="error-form">
+        {{ hasErrorLogin }}
+      </div>
+
+      <div class="btns-login">
+        <button type="submit" class="btn btn-logar">Login</button>
+        <button class="btn btn-abrir-cadastro" (click)="abrirCadastro()">
+          Cadastrar
+        </button>
+      </div>
+    </form>
+
+    <form
+      class="cadastro"
+      *ngIf="cadastroOpen"
+      [formGroup]="cadastroForm"
+      (ngSubmit)="cadastrarUsuario()"
+    >
+      <div class="titulo-cadastro">
+        <span>Informe seus dados</span>
+      </div>
+
+      <div class="campos-cadastro">
+        <div class="input-text">
+          <label for="nome">Nome</label>
+          <input type="text" name="nome" id="nome" formControlName="nome" />
+          <span
+            class="error-campo"
+            *ngIf="
+              cadastroForm.controls.nome.errors &&
+              cadastroForm.controls.nome.dirty
+            "
+          >
+            Informe seu nome
+          </span>
+        </div>
+
+        <div class="input-text">
+          <label for="cpf">CPF</label>
+          <input type="text" name="cpf" id="cpf" formControlName="cpf" />
+          <span
+            class="error-campo"
+            *ngIf="
+              cadastroForm.controls.cpf.errors &&
+              cadastroForm.controls.cpf.dirty
+            "
+          >
+            Informe seu cpf
+          </span>
+        </div>
+
+        <div class="input-text">
+          <label for="email">Email</label>
+          <input type="text" name="email" id="email" formControlName="email" />
+          <span
+            class="error-campo"
+            *ngIf="
+              cadastroForm.controls.email.errors &&
+              cadastroForm.controls.email.dirty
+            "
+          >
+            Informe seu email
+          </span>
+        </div>
+
+        <div class="input-text">
+          <label for="novaSenha">Senha</label>
+          <input
+            type="password"
+            name="novaSenha"
+            id="novaSenha"
+            formControlName="senha"
+          />
+          <span
+            class="error-campo"
+            *ngIf="
+              cadastroForm.controls.senha.errors &&
+              cadastroForm.controls.senha.dirty
+            "
+          >
+            Informe sua senha
+          </span>
+        </div>
+
+        <div class="input-text">
+          <label for="repetirNovaSenha">Confirmar Senha</label>
+          <input
+            type="password"
+            name="repetirNovaSenha"
+            id="repetirNovaSenha"
+            formControlName="conSenha"
+          />
+          <span
+            class="error-campo"
+            *ngIf="
+              cadastroForm.controls.conSenha.errors &&
+              !cadastroForm.hasError('notSame') &&
+              cadastroForm.controls.conSenha.dirty
+            "
+          >
+            Informe a confirmação da senha
+          </span>
+          <span class="error-campo" *ngIf="cadastroForm.hasError('notSame')">
+            As senhas não correspondem
+          </span>
+        </div>
+      </div>
+
+      <div id="text-error" *ngIf="!!hasErrorRegister" class="error-form">
+        {{ hasErrorRegister }}
+      </div>
+
+      <div class="botoes-cadastro">
+        <button class="btn btn-voltar" (click)="fecharCadastro()">
+          <em class="material-icons">arrow_back_ios</em>
+        </button>
+        <button type="submit" class="btn btn-cadastrar">Cadastrar</button>
+      </div>
+    </form>
+  </div>
+</div>

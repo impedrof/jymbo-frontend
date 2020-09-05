@@ -1,0 +1,94 @@
+<div class="logo">
+  <div class="logo-area">
+    <div class="img"></div>
+    <div class="logo-titulo">JYMBO</div>
+  </div>
+  <div class="barra-menu">
+    <div class="area-menu">
+      <div class="descricao-boas">
+        Seja Bem-vindo, <span id="usuarioID" *ngIf="user">{{ user.nome }}</span>
+      </div>
+      <div class="botoes-menu">
+        <div class="sair-btn">
+          <input type="button" value="SAIR" (click)="logout()" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-principal">
+  <div class="meses">
+    <button id="previousMonth">&lt;</button>
+    <span id="mesLabel">Atual</span>
+    <button id="nextMonth">&gt;</button>
+  </div>
+  <div class="painel">
+    <div class="receita-total">0</div>
+    <div class="receitas-despesas">
+      <div class="item-painel receitas">
+        <div class="text">Receita</div>
+        <div class="valor">0</div>
+      </div>
+      <div class="item-painel despesas">
+        <div class="text">Despesa</div>
+        <div class="valor">0</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="conteudo-container">
+    <form
+      class="header"
+      [formGroup]="movimentacaoForm"
+      (ngSubmit)="addDespesaReceita()"
+    >
+      <div class="header-add-des-res">
+        <div class="tipo-add">
+          <select name="tipo-ope" id="tipo-ope" formControlName="tipo">
+            <option value="1">+</option>
+            <option value="2">-</option>
+          </select>
+        </div>
+        <div class="descricao-add">
+          <input
+            type="text"
+            name="descricao"
+            id="descricao"
+            formControlName="descricao"
+          />
+        </div>
+        <div class="valor-add">
+          <input type="text" name="valor" id="valor" formControlName="valor" />
+        </div>
+        <div class="btn-confima">
+          <input type="submit" value="Ok" />
+        </div>
+      </div>
+    </form>
+
+    <div class="body-principal">
+      <div class="receitas">
+        <div class="titulo-receitas">Receitas</div>
+        <div class="area-receitas">
+          <div class="item-receita" *ngFor="let item of listaReceitas">
+            <div class="descricao-item">{{ item.descricao }}</div>
+            <div class="valor-item">{{ item.valor }}</div>
+            <div class="btn-excluir">X</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="despesas">
+        <div class="titulo-despesas">Despesas</div>
+        <div class="area-despesas">
+          <div class="item-despesa" *ngFor="let item of listaDespesas">
+            <div class="valor-item">{{ item.descricao }}</div>
+            <div class="descricao-item">{{ item.valor }}</div>
+            <div class="btn-excluir">X</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

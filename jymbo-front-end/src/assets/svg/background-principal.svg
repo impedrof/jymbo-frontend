@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#3017dc"/>
+      <stop offset="1" stop-color="#4300ff"/>
+    </linearGradient>
+    <clipPath id="clip-background-principal">
+      <rect width="1920" height="1080"/>
+    </clipPath>
+  </defs>
+  <g id="background-principal" clip-path="url(#clip-background-principal)">
+    <rect width="1920" height="1080" fill="#1b1b2f"/>
+    <path id="Caminho_7" data-name="Caminho 7" d="M3909.607,1174.622c-661.269,101.51-559.758,710.574-559.758,710.574S2845.2,1476.254,1886,2276s1922.1,0,1922.1,0Z" transform="translate(-1886 -1196)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>
