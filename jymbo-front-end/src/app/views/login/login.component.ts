@@ -38,7 +38,10 @@ export class LoginComponent implements OnInit {
     this.cadastroForm = this.formBuilder.group(
       {
         nome: [null, Validators.required],
-        email: [null, Validators.required],
+        email: [
+          null,
+          Validators.compose([Validators.required, Validators.email]),
+        ],
         senha: [null, Validators.required],
         conSenha: [null, Validators.required],
         cpf: [null, Validators.required],
@@ -132,5 +135,19 @@ export class LoginComponent implements OnInit {
         this.hasErrorLogin = err.error.error;
       }
     );
+  }
+
+  getErrorMessage(group: FormGroup, formName: string) {
+    const formControl = group.controls[formName];
+    if (formControl.hasError('required')) {
+      return 'Campo obrigatório';
+    }
+
+    if (formControl.hasError('email')) {
+      return 'Email inválido';
+    }
+    if (group.hasError('notSame')) {
+      return 'As senhas não correspondem';
+    }
   }
 }

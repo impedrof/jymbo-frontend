@@ -73,11 +73,11 @@
           <span
             class="error-campo"
             *ngIf="
-              cadastroForm.controls.nome.errors &&
+              cadastroForm.controls.nome.invalid &&
               cadastroForm.controls.nome.dirty
             "
           >
-            Informe seu nome
+            {{ getErrorMessage(cadastroForm, "nome") }}
           </span>
         </div>
 
@@ -87,11 +87,11 @@
           <span
             class="error-campo"
             *ngIf="
-              cadastroForm.controls.cpf.errors &&
+              cadastroForm.controls.cpf.invalid &&
               cadastroForm.controls.cpf.dirty
             "
           >
-            Informe seu cpf
+            {{ getErrorMessage(cadastroForm, "cpf") }}
           </span>
         </div>
 
@@ -101,11 +101,11 @@
           <span
             class="error-campo"
             *ngIf="
-              cadastroForm.controls.email.errors &&
+              cadastroForm.controls.email.invalid &&
               cadastroForm.controls.email.dirty
             "
           >
-            Informe seu email
+            {{ getErrorMessage(cadastroForm, "email") }}
           </span>
         </div>
 
@@ -120,11 +120,11 @@
           <span
             class="error-campo"
             *ngIf="
-              cadastroForm.controls.senha.errors &&
+              cadastroForm.controls.senha.invalid &&
               cadastroForm.controls.senha.dirty
             "
           >
-            Informe sua senha
+            {{ getErrorMessage(cadastroForm, "senha") }}
           </span>
         </div>
 
@@ -139,15 +139,12 @@
           <span
             class="error-campo"
             *ngIf="
-              cadastroForm.controls.conSenha.errors &&
-              !cadastroForm.hasError('notSame') &&
+              (cadastroForm.controls.conSenha.invalid ||
+                cadastroForm.invalid) &&
               cadastroForm.controls.conSenha.dirty
             "
           >
-            Informe a confirmação da senha
-          </span>
-          <span class="error-campo" *ngIf="cadastroForm.hasError('notSame')">
-            As senhas não correspondem
+            {{ getErrorMessage(cadastroForm, "conSenha") }}
           </span>
         </div>
       </div>
