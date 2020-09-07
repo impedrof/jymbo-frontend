@@ -103,6 +103,14 @@
   border-bottom: 2px solid #2021e494;
 }
 
+.input-text input.error {
+  border-bottom: 1px solid #f64747;
+}
+
+.input-text input.error:focus {
+  border-bottom: 2px solid #f64747;
+}
+
 .error-campo {
   font-size: 10px;
   margin-top: 5px;
@@ -112,11 +120,25 @@
 }
 
 .error-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 300;
   font-size: 14px;
   font-family: "Roboto", sans-serif;
-  color: #f64747;
+  color: #fff;
   animation: opacidade 0.5s;
+  background-color: #f64747;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.error-form span:nth-child(1) {
+  font-size: 20px;
+}
+
+.error-form span:nth-child(2) {
+  padding-left: 10px;
 }
 
 @keyframes opacidade {
@@ -146,16 +168,29 @@
   background-color: #380cec;
 }
 
+.btn-logar:active,
+.btn-cadastrar:active {
+  background-color: #552dfb;
+}
+
 .btn-voltar {
   color: #333333;
   border-radius: 2px;
   border: 1px solid #c8c8c8;
-  background-color: #c8c8c82b;
+  background-color: #f4f4f4;
+}
+
+.btn-voltar:active {
+  background-color: #fbfbfb;
 }
 
 .btn-abrir-cadastro {
   color: #ffffff;
   background-color: #38b9ff;
+}
+
+.btn-abrir-cadastro:active {
+  background-color: #6acbff;
 }
 
 /* BTN VOLTAR */

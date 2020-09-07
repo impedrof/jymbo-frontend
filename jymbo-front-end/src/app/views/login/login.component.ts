@@ -150,4 +150,8 @@ export class LoginComponent implements OnInit {
       return 'As senhas não correspondem';
     }
   }
+
+  checkErrorCamp(formGroup: FormGroup, name: string): boolean {
+    return formGroup.controls[name].invalid && formGroup.controls[name].dirty;
+  }
 }
