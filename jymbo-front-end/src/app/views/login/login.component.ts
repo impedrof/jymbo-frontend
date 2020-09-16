@@ -9,6 +9,7 @@ import { User } from './../../models/user';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import CPF from 'cpf-check';
 
 @Component({
   selector: 'app-login',
@@ -44,9 +45,9 @@ export class LoginComponent implements OnInit {
         ],
         senha: [null, Validators.required],
         conSenha: [null, Validators.required],
-        cpf: [null, Validators.required],
+        cpf: [null, Validators.compose([Validators.required, this.checkCPF])],
       },
-      { validators: this.checkPasswords }
+      { validators: this.checkPasswords, updateOn: 'blur' }
     );
   }
 
@@ -123,6 +124,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  checkCPF(control: FormControl) {
+    const cpf = control.value;
+    return CPF.validate(cpf) ? null : { cpfInvalid: true };
+  }
+
   logarUsuario() {
     const email = this.loginForm.value.email;
     const senha = this.loginForm.value.senha;
@@ -146,12 +152,19 @@ export class LoginComponent implements OnInit {
     if (formControl.hasError('email')) {
       return 'Email inválido';
     }
+
+    if (formControl.hasError('cpfInvalid')) {
+      return 'Cpf Inválido';
+    }
+
     if (group.hasError('notSame')) {
       return 'As senhas não correspondem';
     }
   }
 
   checkErrorCamp(formGroup: FormGroup, name: string): boolean {
-    return formGroup.controls[name].invalid && formGroup.controls[name].dirty;
+    const formControl = formGroup.controls[name];
+
+    return formControl.invalid && formControl.dirty;
   }
 }

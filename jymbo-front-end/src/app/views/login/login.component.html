@@ -92,6 +92,7 @@
             id="cpf"
             formControlName="cpf"
             [ngClass]="{ error: checkErrorCamp(cadastroForm, 'cpf') }"
+            mask="000.000.000-99"
           />
           <span class="error-campo" *ngIf="checkErrorCamp(cadastroForm, 'cpf')">
             {{ getErrorMessage(cadastroForm, "cpf") }}
