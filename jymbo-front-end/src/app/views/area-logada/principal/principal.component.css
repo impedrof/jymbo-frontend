@@ -78,6 +78,35 @@
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
+
+/* MESES */
+.meses {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  background-color: #4400ff;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  padding: 10px 10px 0 10px;
+  width: max-content;
+  color: #fff;
+  min-width: 200px;
+}
+
+.meses span {
+  margin: auto 12px;
+}
+
+.meses button {
+  width: 44px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
 /* PAINEL */
 .painel {
   background-color: #4400ff;
@@ -85,7 +114,7 @@
   padding: 20px;
   border-radius: 200px;
   width: 40%;
-  margin: 20px auto;
+  margin: 0 auto 20px auto;
 }
 
 .painel .receita-total {
@@ -269,6 +298,11 @@
     visibility: hidden;
   }
 
+  /* MESES */
+  .meses {
+    min-width: 150px;
+  }
+
   /* PAINEL */
   .painel {
     padding: 10px 20px;
@@ -359,24 +393,4 @@
   .area-despesas .item-despesa .valor-item {
     transition: 0.5s;
   }
-}
-
-.meses {
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  background-color: #ffffff;
-  border-radius: 4px;
-  padding: 10px;
-  width: max-content;
-}
-
-.meses span {
-  margin: auto 12px;
-}
-.meses button {
-  width: 44px;
-  height: 44px;
-  appearance: none;
 }

@@ -61,15 +61,15 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  abrirCadastro() {
+  abrirCadastro(): void {
     this.cadastroOpen = true;
   }
 
-  fecharCadastro() {
+  fecharCadastro(): void {
     this.cadastroOpen = false;
   }
 
-  cadastrarUsuario() {
+  cadastrarUsuario(): any {
     const nome = this.cadastroForm.value.nome;
     const email = this.cadastroForm.value.email;
     const senha = this.cadastroForm.value.senha;
@@ -115,7 +115,7 @@ export class LoginComponent implements OnInit {
       );
   }
 
-  checkPasswords(group: FormGroup) {
+  checkPasswords(group: FormGroup): any {
     const senha = group.get('senha');
     const conSenha = group.get('conSenha');
 
@@ -124,15 +124,15 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  checkCPF(control: FormControl) {
+  checkCPF(control: FormControl): any {
     const cpf = control.value;
     return CPF.validate(cpf) ? null : { cpfInvalid: true };
   }
 
-  logarUsuario() {
+  logarUsuario(): void {
     const email = this.loginForm.value.email;
     const senha = this.loginForm.value.senha;
-    if (!this.loginForm.valid) return;
+    if (!this.loginForm.valid) { return; }
     this.authService.logar(new User(null, email, senha)).subscribe(
       (res) => {
         this.route.navigateByUrl('/principal');
@@ -143,7 +143,7 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  getErrorMessage(group: FormGroup, formName: string) {
+  getErrorMessage(group: FormGroup, formName: string): string {
     const formControl = group.controls[formName];
     if (formControl.hasError('required')) {
       return 'Campo obrigatório';
