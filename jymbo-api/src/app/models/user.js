@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../../database/database');
 const bcrypt = require('bcryptjs');
 
-const UserSchema = sequelize.define('product', {
+const UserSchema = sequelize.define('usuario', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
