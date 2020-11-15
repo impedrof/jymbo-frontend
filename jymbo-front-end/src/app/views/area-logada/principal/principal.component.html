@@ -42,34 +42,6 @@
   </div>
 
   <div class="conteudo-container">
-    <form
-      class="header"
-      [formGroup]="movimentacaoForm"
-      (ngSubmit)="addDespesaReceita()"
-    >
-      <div class="header-add-des-res">
-        <div class="tipo-add">
-          <select name="tipo-ope" id="tipo-ope" formControlName="tipo">
-            <option value="1">+</option>
-            <option value="2">-</option>
-          </select>
-        </div>
-        <div class="descricao-add">
-          <input
-            type="text"
-            name="descricao"
-            id="descricao"
-            formControlName="descricao"
-          />
-        </div>
-        <div class="valor-add">
-          <input type="text" name="valor" id="valor" formControlName="valor" />
-        </div>
-        <div class="btn-confima">
-          <input type="submit" value="Ok" />
-        </div>
-      </div>
-    </form>
 
     <div class="body-principal">
       <div class="receitas">

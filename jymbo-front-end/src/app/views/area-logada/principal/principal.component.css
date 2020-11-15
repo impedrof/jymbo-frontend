@@ -16,44 +16,44 @@
 }
 
 .logo .logo-area {
-  width: 20%;
+  width: 10%;
 }
 
 .logo .img {
   background-image: url("../../../../assets/svg/jymbo-logo.svg");
   background-repeat: no-repeat;
   background-size: contain;
-  width: 50px;
-  height: 50px;
-  margin-left: 5px;
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
 }
 
 .logo .logo-titulo {
-  margin-top: 5px;
+  margin-top: 7px;
   color: #ffffff;
+  font-size: 15px;
 }
 
 .logo .barra-menu {
-  width: 60%;
-  background-color: #ffffff;
   border-top-left-radius: 100px;
   border-bottom-left-radius: 20px;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   background-repeat: no-repeat;
-  background-size: auto;
+  width: 80%;
+  background-color: transparent;
+  background-size: contain;
 }
 
 .logo .barra-menu .area-menu {
   display: flex;
   justify-content: space-between;
-  margin: 20px 40px 20px 70px;
   font-family: "Roboto Condensed", sans-serif;
+  margin: 5px;
 }
 
 .logo .barra-menu .area-menu .descricao-boas {
-  font-size: 18px;
-  padding-top: 5px;
+  visibility: hidden;
 }
 
 .logo .barra-menu .area-menu .botoes-menu input {
@@ -72,13 +72,6 @@
   font-family: "Roboto Condensed", sans-serif;
 }
 
-.conteudo-container {
-  padding: 40px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-}
-
 /* MESES */
 .meses {
   margin: 0 auto;
@@ -91,7 +84,7 @@
   padding: 10px 10px 0 10px;
   width: max-content;
   color: #fff;
-  min-width: 200px;
+  min-width: 150px;
 }
 
 .meses span {
@@ -111,10 +104,10 @@
 .painel {
   background-color: #4400ff;
   color: #ffffff;
-  padding: 20px;
-  border-radius: 200px;
-  width: 40%;
   margin: 0 auto 20px auto;
+  border-radius: 200px;
+  padding: 10px 20px;
+  width: 80%;
 }
 
 .painel .receita-total {
@@ -139,258 +132,65 @@
 .painel .item-painel .text {
   font-size: 18px;
 }
+
 .painel .item-painel .valor {
   font-size: 22px;
 }
 
-/* HEADER  */
-
-/* HEADER BOTÃO ADD */
-.header-add-des-res {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 15px;
-}
-
-.header-add-des-res .descricao-add {
-  width: 50%;
-  margin: 0 5px;
-}
-
-.header-add-des-res .valor-add {
-  margin-right: 5px;
-}
-
-.header-add-des-res .tipo-add select,
-.header-add-des-res .descricao-add input,
-.header-add-des-res .btn-confima input,
-.header-add-des-res .valor-add input {
-  height: 35px;
-  width: 100%;
-  box-sizing: border-box;
-  border-radius: 10px;
-}
-
-.header-add-des-res .tipo-add select {
-  box-sizing: border-box;
-  padding: 5px;
-  font-size: 18px;
-  border: 1px solid #d3d3d3;
-}
-
-.header-add-des-res .descricao-add input,
-.header-add-des-res .valor-add input {
-  font-family: "Roboto Condensed", sans-serif;
-  padding-left: 10px;
-  border: 1px solid #d3d3d3;
-  font-size: 18px;
-}
-
-.header-add-des-res .btn-confima input {
-  appearance: none;
-  border: none;
-  background-color: #4400ff;
-  color: #ffffff;
-  font-family: "Roboto Condensed", sans-serif;
-  cursor: pointer;
-  padding: 2px 15px;
-  text-transform: uppercase;
-  transition: 0.5s;
-}
-.header-add-des-res .btn-confima input:hover {
-  background-color: #31318d;
-  transition: 0.5s;
+/* CONTAINER CONTEÚDO */
+.conteudo-container {
+  padding: 0px;
+  box-shadow: none;
+  border-radius: 4px;
 }
 
 /* BODY */
 .body-principal {
-  display: flex;
-  justify-content: space-between;
+  background-color: #ffffff;
 }
 
-.body-principal .receitas .titulo-receitas,
-.body-principal .despesas .titulo-despesas {
-  color: #d3d3d3;
-}
-.body-principal .receitas .titulo-receitas {
-  text-align: right;
-}
-
-.body-principal .receitas,
-.body-principal .despesas {
-  width: 49%;
-}
-
-/* area receitas e despesas itens */
-.area-receitas,
-.area-despesas {
-  font-size: 15px;
-}
-
-.area-receitas .item-receita,
-.area-despesas .item-despesa {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #d3d3d3;
-  margin-top: 10px;
-  position: relative;
-  transition: 0.5s;
-}
-
-.area-receitas .item-receita .btn-excluir,
-.area-despesas .item-despesa .btn-excluir {
-  position: absolute;
-  right: 0;
-  width: 0;
-  color: red;
-  opacity: 0;
-  transition: 0.5s;
-  cursor: pointer;
-}
-
-.area-receitas .item-receita:hover .btn-excluir,
-.area-despesas .item-despesa:hover .btn-excluir {
-  right: 10px;
-  opacity: 1;
-  transition: 0.5s;
-}
-
-.area-receitas .item-receita .valor-item,
-.area-despesas .item-despesa .descricao-item {
-  transition: 0.5s;
-}
-
-.area-receitas .item-receita:hover .valor-item,
-.area-despesas .item-despesa:hover .descricao-item {
-  margin-right: 20px;
-  transition: 0.5s;
-}
-
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 768px) {
   .logo .logo-area {
-    width: 10%;
+    width: 20%;
   }
 
   .logo .img {
-    width: 30px;
-    height: 30px;
-    margin-left: 10px;
+    width: 50px;
+    height: 50px;
+    margin-left: 5px;
   }
 
   .logo .logo-titulo {
-    margin-top: 7px;
-    color: #ffffff;
-    font-size: 15px;
+    margin-top: 5px;
   }
 
   .logo .barra-menu {
-    width: 80%;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-size: contain;
+    width: 60%;
+    background-size: auto;
+    background-color: #ffffff;
   }
 
   .logo .barra-menu .area-menu {
-    margin: 5px;
+    margin: 20px 40px 20px 70px;
   }
 
   .logo .barra-menu .area-menu .descricao-boas {
-    visibility: hidden;
+    visibility: visible;
+    font-size: 18px;
+    padding-top: 5px;
   }
 
   /* MESES */
   .meses {
-    min-width: 150px;
+    min-width: 200px;
   }
 
   /* PAINEL */
   .painel {
-    padding: 10px 20px;
-    width: 80%;
-  }
-
-  .painel .item-painel {
-    width: 47%;
-  }
-
-  .conteudo-container {
-    padding: 0px;
-    background-color: transparent;
-    box-shadow: none;
-    border-radius: 4px;
-  }
-
-  .header-add-des-res {
-    display: flex;
     padding: 20px;
-    justify-content: stretch;
-    margin-bottom: 15px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    flex-wrap: wrap;
-  }
-  .header-add-des-res .tipo-add {
-    order: 3;
-    width: 20%;
-    margin-right: 5px;
-  }
-  .header-add-des-res .descricao-add {
-    order: 1;
-    width: 100%;
-    margin-bottom: 5px;
-  }
-
-  .header-add-des-res .descricao-add input {
-    width: 100%;
-    margin: 0;
-  }
-  .header-add-des-res .btn-confima {
-    order: 4;
-    margin-left: auto;
-    margin-right: 5px;
-  }
-  .header-add-des-res .valor-add {
-    order: 2;
-    width: 57%;
-    margin-left: 5px;
+    width: 40%;
   }
 
   .body-principal {
-    display: flex;
-    padding: 20px;
-    justify-content: space-between;
-    flex-direction: column;
-    background-color: #ffffff;
-    border-radius: 10px;
-  }
-
-  .body-principal .receitas,
-  .body-principal .despesas {
-    width: 100%;
-  }
-
-  .body-principal .receitas .titulo-receitas {
-    text-align: left;
-  }
-
-  .body-principal .despesas .titulo-despesas {
-    margin-top: 15px;
-  }
-
-  .area-despesas .item-despesa .valor-item {
-    order: 2;
-  }
-
-  .area-despesas .item-despesa .descricao-item {
-    order: 1;
-  }
-
-  .area-despesas .item-despesa:hover .valor-item {
-    margin-right: 20px;
-    transition: 0.5s;
-  }
-
-  .area-despesas .item-despesa .valor-item {
-    transition: 0.5s;
   }
 }
