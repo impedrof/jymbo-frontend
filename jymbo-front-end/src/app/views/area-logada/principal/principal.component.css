@@ -139,17 +139,99 @@
 
 /* CONTAINER CONTEÚDO */
 .conteudo-container {
-  padding: 0px;
-  box-shadow: none;
-  border-radius: 4px;
 }
 
+.area-botoes {
+  display: flex;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.area-botoes .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.area-botoes .btn span {
+  font-size: 18px;
+  margin-right: 5px;
+  color: rgb(80, 255, 103);
+}
+
+.area-botoes .btn .text-btn {
+  font-size: 14px;
+}
 /* BODY */
 .body-principal {
-  background-color: #ffffff;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
 }
 
-@media screen and (min-width: 768px) {
+.card-mov {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 5px;
+  min-height: 50px;
+  transition: 0.3s;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid rgb(255, 255, 255);
+  box-shadow: 2px 2px rgb(99, 99, 99);
+}
+
+.card-mov:hover {
+  border: 1px solid #0084ff;
+  box-shadow: 2px 2px rgb(0, 140, 255);
+}
+
+.card-mov .superior {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  transition: 0.3s;
+}
+
+.card-mov:hover .superior {
+  border-bottom: 1px solid #0084ff;
+}
+
+.card-mov .superior .desc {
+}
+
+.card-mov .superior .valor {
+}
+
+.card-mov .inferior {
+  display: flex;
+}
+
+.card-mov .inferior .tag {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px 10px;
+  color: #ffffff;
+  background-color: lightgray;
+  border-radius: 5px;
+}
+
+.card-mov .inferior .tag.vermelho {
+  background-color: rgb(255, 129, 129);
+}
+
+.card-mov .inferior .tag.verde {
+  background-color: rgb(80, 255, 103);
+}
+
+@media screen and (min-width: 800px) {
   .logo .logo-area {
     width: 20%;
   }
@@ -192,5 +274,21 @@
   }
 
   .body-principal {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .conteudo-container {
+    width: 1200px;
+    margin: 0 auto;
+  }
+
+  .body-principal {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .card-mov {
+    padding: 15px;
   }
 }
