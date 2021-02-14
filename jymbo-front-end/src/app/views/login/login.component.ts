@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.authService
-      .cadastrarUsuario(new User(nome, email, senha, cpf))
+      .cadastrarUsuario(new User(null, nome, email, senha, cpf))
       .subscribe(
         (result) => {
           if (result) {
@@ -133,7 +133,7 @@ export class LoginComponent implements OnInit {
     const email = this.loginForm.value.email;
     const senha = this.loginForm.value.senha;
     if (!this.loginForm.valid) { return; }
-    this.authService.logar(new User(null, email, senha)).subscribe(
+    this.authService.logar(new User(null, null, email, senha, null)).subscribe(
       (res) => {
         this.route.navigateByUrl('/principal');
       },
