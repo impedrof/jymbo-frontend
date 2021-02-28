@@ -43,45 +43,85 @@
 
   <div class="conteudo-container">
     <div class="area-botoes">
-      <div class="btn incluir">
+      <div class="btn incluir" (click)="showHideAddMov()">
         <span class="material-icons">add_circle_outline</span>
         <div class="text-btn">Incluir</div>
       </div>
     </div>
     <div class="body-principal">
-      <div class="card-mov">
-        <div class="superior">
-          <div class="desc">Conta de Luz</div>
-          <div class="valor">R$ 80.000,00</div>
+      <div class="esquerdo">
+        <div class="titulo-secao">
+          <h3>Adicionar Movimentação</h3>
         </div>
-        <div class="inferior">
-          <div class="tag vermelho">
-            <span>Despesa</span>
+
+        <div class="tipo-mov">
+          <div class="componente-escolha">
+            <div id="opcao1" class="opcao ativa" (click)="escolherTipoMovimentacao(1)">Receita</div>
+            <div id="opcao2" class="opcao" (click)="escolherTipoMovimentacao(2)">Despesa</div>
+          </div>
+        </div>
+
+        <div class="campo-input descricao">
+          <label for="descricao">Descrição</label>
+          <input type="text" name="descricao" id="descricao">
+        </div>
+
+        <div class="campo-input valor">
+          <label for="valor">Valor</label>
+          <input type="text" name="valor" id="valor">
+        </div>
+
+        <div class="campo-input data">
+          <label for="data">Data</label>
+          <input type="date" name="data" id="data">
+        </div>
+
+        <div class="area-botao-confirmar">
+          <button class="btn primary">
+            Salvar
+          </button>
+        </div>
+
+      </div>
+      <div class="direito">
+        <div class="titulo-secao">
+          <h3>Lista de Movimentações</h3>
+        </div>
+        <div class="card-mov">
+          <div class="superior">
+            <div class="desc">Conta de Luz</div>
+            <div class="valor">R$ 80.000,00</div>
+          </div>
+          <div class="inferior">
+            <div class="tag vermelho">
+              <span>Despesa</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-mov">
+          <div class="superior">
+            <div class="desc">Venda do Carro</div>
+            <div class="valor">R$ 10.000.000,00</div>
+          </div>
+          <div class="inferior">
+            <div class="tag verde">
+              <span>Receita</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-mov">
+          <div class="superior">
+            <div class="desc">Salário</div>
+            <div class="valor">R$ 10.000.000,00</div>
+          </div>
+          <div class="inferior">
+            <div class="tag verde">
+              <span>Receita</span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="card-mov">
-        <div class="superior">
-          <div class="desc">Venda do Carro</div>
-          <div class="valor">R$ 10.000.000,00</div>
-        </div>
-        <div class="inferior">
-          <div class="tag verde">
-            <span>Receita</span>
-          </div>
-        </div>
-      </div>
-      <div class="card-mov">
-        <div class="superior">
-          <div class="desc">Salário</div>
-          <div class="valor">R$ 10.000.000,00</div>
-        </div>
-        <div class="inferior">
-          <div class="tag verde">
-            <span>Receita</span>
-          </div>
-        </div>
-      </div>
+
     </div>
   </div>
 </div>

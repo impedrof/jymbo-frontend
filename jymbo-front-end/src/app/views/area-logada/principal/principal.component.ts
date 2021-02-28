@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { style } from '@angular/animations';
 
 @Component({
   selector: 'app-principal',
@@ -14,6 +15,7 @@ export class PrincipalComponent implements OnInit {
     tipo: new FormControl(''),
     descricao: new FormControl(''),
     valor: new FormControl(''),
+    data: new FormControl('')
   });
   listaDeMovimentacoes = [];
   listaReceitas = [];
@@ -25,6 +27,14 @@ export class PrincipalComponent implements OnInit {
     this.authService.getUser().subscribe((res) => {
       this.user = res;
     });
+
+    window.onresize = () => {
+      if(window.screen.width <= 1000) {
+        this.logicaHideShow('hide');
+      } else {
+        this.logicaHideShow('show');
+      }
+    }
   }
 
   logout() {
@@ -49,5 +59,37 @@ export class PrincipalComponent implements OnInit {
     }
     this.listaDeMovimentacoes.push(novaMovimentacao);
     this.movimentacaoForm.reset();
+  }
+
+  logicaHideShow(tipo: string) {
+    const divEsquerdo = document.querySelector('.body-principal .esquerdo');
+    if (tipo === 'hide') {
+      divEsquerdo.classList.remove('show');
+      divEsquerdo.classList.add('hide');
+    } else if (tipo === 'show') {
+      divEsquerdo.classList.add('show');
+      divEsquerdo.classList.remove('hide');
+    }
+  }
+
+  showHideAddMov(): void {
+    const divEsquerdo = document.querySelector('.body-principal .esquerdo');
+    if(divEsquerdo.classList.contains('show')) {
+      this.logicaHideShow('hide');
+    } else {
+      this.logicaHideShow('show');
+    }
+  }
+
+  escolherTipoMovimentacao(tipo: number): void {
+    const opcao1 = document.querySelector("#opcao1");
+    const opcao2 = document.querySelector("#opcao2");
+    if(tipo === 1) {
+      opcao1.classList.add('ativa');
+      opcao2.classList.remove('ativa');
+    } else {
+      opcao2.classList.add('ativa');
+      opcao1.classList.remove('ativa');
+    }
   }
 }
