@@ -1,10 +1,11 @@
+import { User } from './../../../models/user';
 import { Movimentacao } from './../../../models/movimentacoes';
 import { PrincipalService } from './../../../services/principal.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { style } from '@angular/animations';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-principal',
@@ -12,18 +13,18 @@ import { style } from '@angular/animations';
   styleUrls: ['./principal.component.css'],
 })
 export class PrincipalComponent implements OnInit {
-  user;
-  movimentacaoForm = new FormGroup({
-    tipo: new FormControl(''),
-    descricao: new FormControl(''),
-    valor: new FormControl(''),
-    data: new FormControl('')
-  });
+  user: User;
+  movimentacaoForm: FormGroup;
   listaDeMovimentacoes: Movimentacao[] = [];
   listaReceitas = [];
   listaDespesas = [];
 
-  constructor(private authService: AuthService, private router: Router, private principal: PrincipalService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private principal: PrincipalService,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.authService.getUser().subscribe((res) => {
@@ -32,6 +33,13 @@ export class PrincipalComponent implements OnInit {
         this.listaDeMovimentacoes = mov;
       });
     });
+
+    this.movimentacaoForm = this.formBuilder.group({
+      tipo: [1, Validators.required],
+      descricao: [null, Validators.required],
+      valor: [null, Validators.required],
+      data: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), Validators.required]
+    })
 
     window.onresize = () => {
       if(window.screen.width <= 1000) {
@@ -45,25 +53,6 @@ export class PrincipalComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigateByUrl('/login');
-  }
-
-  addDespesaReceita() {
-    const novaMovimentacao = this.movimentacaoForm.value;
-    if (
-      novaMovimentacao.tipo === '' ||
-      novaMovimentacao.descricao === '' ||
-      novaMovimentacao.valor === ''
-    ) {
-      return -1;
-    }
-
-    if (novaMovimentacao.tipo === '1') {
-      this.listaReceitas.push(novaMovimentacao);
-    } else {
-      this.listaDespesas.push(novaMovimentacao);
-    }
-    this.listaDeMovimentacoes.push(novaMovimentacao);
-    this.movimentacaoForm.reset();
   }
 
   logicaHideShow(tipo: string) {
@@ -92,9 +81,66 @@ export class PrincipalComponent implements OnInit {
     if(tipo === 1) {
       opcao1.classList.add('ativa');
       opcao2.classList.remove('ativa');
+      this.movimentacaoForm.patchValue({
+        tipo: 1
+      })
     } else {
       opcao2.classList.add('ativa');
       opcao1.classList.remove('ativa');
+      this.movimentacaoForm.patchValue({
+        tipo: 2
+      })
     }
+  }
+
+  cadastrarMovimentacao(): any {
+    const tipo = this.movimentacaoForm.value.tipo;
+    const descricao = this.movimentacaoForm.value.descricao;
+    const valor = this.movimentacaoForm.value.valor;
+    const data = this.movimentacaoForm.value.data;
+
+    if (!descricao) {
+      this.movimentacaoForm.controls.descricao.setErrors({ required: true });
+      this.movimentacaoForm.controls.descricao.markAsDirty();
+    }
+
+    if (!valor) {
+      this.movimentacaoForm.controls.valor.setErrors({ required: true });
+      this.movimentacaoForm.controls.valor.markAsDirty();
+    }
+
+    if (!data) {
+      this.movimentacaoForm.controls.data.setErrors({ required: true });
+      this.movimentacaoForm.controls.data.markAsDirty();
+    }
+
+    if (!this.movimentacaoForm.valid) {
+      return -1;
+    }
+
+    this.principal.cadastrarMovimentacao(new Movimentacao(null, tipo, descricao, valor, data, this.user.id)).subscribe(response => {
+      if(response) {
+        this.principal.getMovimentacoes(this.user.id).subscribe(mov => {
+          this.listaDeMovimentacoes = mov;
+        });
+      }
+    });
+  }
+
+  getErrorMessage(group: FormGroup, formName: string): string {
+    const formControl = group.controls[formName];
+    if (formControl.hasError('required')) {
+      return 'Campo obrigatório';
+    }
+  }
+
+  checkErrorCamp(formGroup: FormGroup, name: string): boolean {
+    const formControl = formGroup.controls[name];
+
+    return formControl.invalid && formControl.dirty;
+  }
+
+  formatarData(data: Date): string {
+    return `${data}`;
   }
 }

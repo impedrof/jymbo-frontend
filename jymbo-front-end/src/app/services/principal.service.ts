@@ -21,4 +21,12 @@ export class PrincipalService {
       })
     );
   }
+
+  cadastrarMovimentacao(movimentacao: Movimentacao): Observable<any> {
+    return this.http.post(`${this.url}/cadastrar`, movimentacao).pipe(
+      tap((u) => {
+        console.log(u);
+      })
+    );
+  }
 }

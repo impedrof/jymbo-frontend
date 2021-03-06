@@ -17,3 +17,15 @@
   font-size: 14px;
   color: rgb(63, 63, 63);
 }
+
+.campo-input input.error-campo {
+  border: 1px solid #f64747;
+}
+
+.campo-input .error-campo {
+  font-size: 10px;
+  margin-top: 5px;
+  color: #f64747;
+  opacity: 0.9;
+  animation: opacidade 0.5s;
+}

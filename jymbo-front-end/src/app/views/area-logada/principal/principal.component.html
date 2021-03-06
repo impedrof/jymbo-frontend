@@ -48,7 +48,7 @@
         <div class="text-btn">Incluir</div>
       </div>
     </div>
-    <div class="body-principal">
+    <form class="body-principal" [formGroup]="movimentacaoForm" (ngSubmit)="cadastrarMovimentacao()">
       <div class="esquerdo">
         <div class="titulo-secao">
           <h3>Adicionar Movimentação</h3>
@@ -59,21 +59,51 @@
             <div id="opcao1" class="opcao ativa" (click)="escolherTipoMovimentacao(1)">Receita</div>
             <div id="opcao2" class="opcao" (click)="escolherTipoMovimentacao(2)">Despesa</div>
           </div>
+          <span class="error-campo" *ngIf="checkErrorCamp(movimentacaoForm, 'tipo')">
+            {{ getErrorMessage(movimentacaoForm, 'tipo') }}
+          </span>
         </div>
 
         <div class="campo-input descricao">
           <label for="descricao">Descrição</label>
-          <input type="text" name="descricao" id="descricao">
+          <input
+            type="text"
+            name="descricao"
+            id="descricao"
+            formControlName="descricao"
+            [ngClass]="{'error-campo': checkErrorCamp(movimentacaoForm, 'descricao')}"
+          >
+          <span class="error-campo" *ngIf="checkErrorCamp(movimentacaoForm, 'descricao')">
+            {{ getErrorMessage(movimentacaoForm, 'descricao') }}
+          </span>
         </div>
 
         <div class="campo-input valor">
           <label for="valor">Valor</label>
-          <input type="text" name="valor" id="valor">
+          <input
+            type="text"
+            name="valor"
+            id="valor"
+            formControlName="valor"
+            [ngClass]="{'error-campo': checkErrorCamp(movimentacaoForm, 'valor')}"
+          >
+          <span class="error-campo" *ngIf="checkErrorCamp(movimentacaoForm, 'valor')">
+            {{ getErrorMessage(movimentacaoForm, 'valor') }}
+          </span>
         </div>
 
         <div class="campo-input data">
           <label for="data">Data</label>
-          <input type="date" name="data" id="data">
+          <input
+            type="date"
+            name="data"
+            id="data"
+            formControlName="data"
+            [ngClass]="{'error-campo': checkErrorCamp(movimentacaoForm, 'data')}"
+          >
+          <span class="error-campo" *ngIf="checkErrorCamp(movimentacaoForm, 'data')">
+            {{ getErrorMessage(movimentacaoForm, 'data') }}
+          </span>
         </div>
 
         <div class="area-botao-confirmar">
@@ -93,7 +123,9 @@
           </div>
           <div class="card-mov" *ngFor="let mov of listaDeMovimentacoes">
             <div class="superior">
-              <div class="desc">{{ mov.descricao }}</div>
+              <div class="desc">
+                <span>{{ mov.descricao }}</span>
+              </div>
               <div class="valor">R$ {{ mov.valor }}</div>
             </div>
             <div class="inferior">
@@ -109,6 +141,6 @@
 
       </div>
 
-    </div>
+    </form>
   </div>
 </div>
