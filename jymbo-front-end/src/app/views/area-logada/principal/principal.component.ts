@@ -1,3 +1,5 @@
+import { Movimentacao } from './../../../models/movimentacoes';
+import { PrincipalService } from './../../../services/principal.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -17,15 +19,18 @@ export class PrincipalComponent implements OnInit {
     valor: new FormControl(''),
     data: new FormControl('')
   });
-  listaDeMovimentacoes = [];
+  listaDeMovimentacoes: Movimentacao[] = [];
   listaReceitas = [];
   listaDespesas = [];
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private principal: PrincipalService) {}
 
   ngOnInit(): void {
     this.authService.getUser().subscribe((res) => {
       this.user = res;
+      this.principal.getMovimentacoes(res.id).subscribe(mov => {
+        this.listaDeMovimentacoes = mov;
+      });
     });
 
     window.onresize = () => {

@@ -1,14 +1,15 @@
 const express = require('express');
 const authMiddleware = require('../middlewares/auth');
-const { JsonWebTokenError } = require('jsonwebtoken');
-const authConfig = require('../../util/auth.json');
+const Movimentacao = require('../models/movimentacao');
 
 const router = express.Router();
 
 router.use(authMiddleware);
 
-router.get('', (req, res) => {
-  res.send({ ok: true, userId: req.userId });
+router.get('/:idUser', (req, res) => {
+  Movimentacao.findAll({ where: { usuarioId: req.params.idUser } }).then(mov => {
+    res.send(mov);
+  });
 });
 
 module.exports = router;

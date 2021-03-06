@@ -87,39 +87,26 @@
         <div class="titulo-secao">
           <h3>Lista de Movimentações</h3>
         </div>
-        <div class="card-mov">
-          <div class="superior">
-            <div class="desc">Conta de Luz</div>
-            <div class="valor">R$ 80.000,00</div>
+        <div class="area-movimentacoes">
+          <div class="sem-movimentacoes" *ngIf="listaDeMovimentacoes.length === 0">
+            Não há movimentações registradas
           </div>
-          <div class="inferior">
-            <div class="tag vermelho">
-              <span>Despesa</span>
+          <div class="card-mov" *ngFor="let mov of listaDeMovimentacoes">
+            <div class="superior">
+              <div class="desc">{{ mov.descricao }}</div>
+              <div class="valor">R$ {{ mov.valor }}</div>
+            </div>
+            <div class="inferior">
+              <div class="tag verde" *ngIf="mov.tipo == 1">
+                <span>Receita</span>
+              </div>
+              <div class="tag vermelho" *ngIf="mov.tipo == 2">
+                <span>Despesa</span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="card-mov">
-          <div class="superior">
-            <div class="desc">Venda do Carro</div>
-            <div class="valor">R$ 10.000.000,00</div>
-          </div>
-          <div class="inferior">
-            <div class="tag verde">
-              <span>Receita</span>
-            </div>
-          </div>
-        </div>
-        <div class="card-mov">
-          <div class="superior">
-            <div class="desc">Salário</div>
-            <div class="valor">R$ 10.000.000,00</div>
-          </div>
-          <div class="inferior">
-            <div class="tag verde">
-              <span>Receita</span>
-            </div>
-          </div>
-        </div>
+
       </div>
 
     </div>

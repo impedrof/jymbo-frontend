@@ -8,8 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./area-logada.component.css'],
 })
 export class AreaLogadaComponent implements OnInit {
-  constructor(private pricipal: PrincipalService, private auth: AuthService) {
-    this.pricipal.getPrincipal().subscribe();
+  constructor(private auth: AuthService) {
     this.auth.isAuthenticated().subscribe();
     this.auth.getUser().subscribe();
   }

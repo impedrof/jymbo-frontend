@@ -188,9 +188,12 @@
 }
 
 .body-principal .direito {
+}
+
+.body-principal .direito .area-movimentacoes {
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 10px;
+  gap: 10px;
 }
 
 .titulo-secao h3 {
@@ -383,9 +386,12 @@
   .body-principal .direito {
     grid-column: 3/7;
     padding: 20px;
-    grid-template-columns: 1fr;
     border-radius: inherit;
     box-shadow: none;
+  }
+
+  .body-principal .direito .movimentacoes {
+    grid-template-columns: 1fr;
   }
 
   .card-mov:hover {
