@@ -19,6 +19,8 @@ export class PrincipalComponent implements OnInit {
   listaReceitas = [];
   listaDespesas = [];
 
+  dataAtual = '';
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -29,8 +31,8 @@ export class PrincipalComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getUser().subscribe((res) => {
       this.user = res;
-      this.principal.getMovimentacoes(res.id).subscribe(mov => {
-        this.listaDeMovimentacoes = mov;
+      this.principal.getMovimentacoes(res.id).subscribe((mov: Movimentacao[]) => {
+        this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
       });
     });
 
@@ -48,6 +50,12 @@ export class PrincipalComponent implements OnInit {
         this.logicaHideShow('show');
       }
     }
+  }
+
+  novaFuncao(data: string): boolean {
+    let resp = this.dataAtual !== data;
+    this.dataAtual = data;
+    return resp;
   }
 
   logout() {
@@ -118,10 +126,12 @@ export class PrincipalComponent implements OnInit {
       return -1;
     }
 
-    this.principal.cadastrarMovimentacao(new Movimentacao(null, tipo, descricao, valor, data, this.user.id)).subscribe(response => {
+    const novaMov = new Movimentacao(null, tipo, descricao, valor, data, this.user.id);
+    console.log(novaMov.data);
+    this.principal.cadastrarMovimentacao(novaMov).subscribe(response => {
       if(response) {
         this.principal.getMovimentacoes(this.user.id).subscribe(mov => {
-          this.listaDeMovimentacoes = mov;
+          this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
         });
       }
     });
@@ -138,9 +148,5 @@ export class PrincipalComponent implements OnInit {
     const formControl = formGroup.controls[name];
 
     return formControl.invalid && formControl.dirty;
-  }
-
-  formatarData(data: Date): string {
-    return `${data}`;
   }
 }

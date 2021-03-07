@@ -226,6 +226,7 @@
 .card-mov .superior {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   gap: 5px;
   border-bottom: 1px solid lightgray;
   margin-bottom: 5px;
@@ -235,6 +236,18 @@
 
 .card-mov:hover .superior {
   border-bottom: 1px solid #0084ff;
+}
+
+.card-mov .superior .desc {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-container .data {
+  font-size: 15px;
+  margin: 16px 0;
+  font-weight: 300;
+  color: #424242;
 }
 
 .card-mov .inferior {

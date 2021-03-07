@@ -13,7 +13,7 @@ export class PrincipalService {
 
   getMovimentacoes(idUsuario: number): Observable<Movimentacao[]> {
     return this.http.get(`${this.url}/${idUsuario}`).pipe(
-      map((mov: any) => {
+      map((mov: Movimentacao[]) => {
         if (!mov) {
           throw new Error('Erro ao buscar movimentações.');
         }
@@ -24,9 +24,7 @@ export class PrincipalService {
 
   cadastrarMovimentacao(movimentacao: Movimentacao): Observable<any> {
     return this.http.post(`${this.url}/cadastrar`, movimentacao).pipe(
-      tap((u) => {
-        console.log(u);
-      })
+      tap((u) => {})
     );
   }
 }
