@@ -27,15 +27,12 @@ export class Movimentacao {
   formatarData(data: Date): string {
     const dataConvertida = new Date(String(data).replace('T00:00:00.000Z', ''));
     let dd = String(dataConvertida.getUTCDate());
-    let mm = String(dataConvertida.getUTCMonth() + 1);
+    let mm = dataConvertida.toLocaleString('default', { month: 'long' });
     const yyyy = dataConvertida.getFullYear();
     if (dd.length < 2) {
       dd = `0${dd}`;
     }
-    if (mm.length < 2) {
-      mm = `0${mm}`;
-    }
-    return `${dd}/${mm}/${yyyy}`;
+    return `${dd} de ${mm} de ${yyyy}`;
   }
 
   static instanciarArrayMovimentacao(array: Movimentacao[]): Movimentacao[] {
