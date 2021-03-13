@@ -161,6 +161,13 @@ export class PrincipalComponent implements OnInit {
         this.principal.getMovimentacoes(this.user.id, this.dataAtual).subscribe(mov => {
           this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
           this.alterarMes(null, novaMov);
+          this.movimentacaoForm = this.formBuilder.group({
+            tipo: [1, Validators.required],
+            descricao: [null, Validators.required],
+            valor: [null, Validators.required],
+            data: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), Validators.required]
+          });
+          this.escolherTipoMovimentacao(1);
         });
       }
     });
