@@ -52,7 +52,7 @@ export class PrincipalComponent implements OnInit {
     }
   }
 
-  novaFuncao(data: string): boolean {
+  verificarData(data: string): boolean {
     let resp = this.dataAtual !== data;
     this.dataAtual = data;
     return resp;

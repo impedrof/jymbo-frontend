@@ -122,7 +122,7 @@
             Não há movimentações registradas
           </div>
           <div class="card-container" *ngFor="let mov of listaDeMovimentacoes">
-            <div class="data" *ngIf="novaFuncao(mov.dataFormatada)"> {{ mov.dataFormatada }} </div>
+            <div class="data" *ngIf="verificarData(mov.dataFormatada)"> {{ mov.dataFormatada }} </div>
             <div class="card-mov">
               <div class="superior">
                 <div class="desc">

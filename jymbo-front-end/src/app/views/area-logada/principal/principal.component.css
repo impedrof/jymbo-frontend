@@ -182,7 +182,7 @@
 }
 
 .body-principal .direito {
-  background: rgb(241, 241, 241);
+  background: rgb(250, 250, 250);
 }
 
 .body-principal .esquerdo {
@@ -276,6 +276,7 @@
 .tipo-mov {
   display: flex;
 }
+
 .componente-escolha {
   display: flex;
   justify-content: space-around;
