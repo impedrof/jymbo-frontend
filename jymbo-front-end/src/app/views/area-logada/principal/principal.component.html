@@ -28,15 +28,15 @@
     </button>
   </div>
   <div class="painel">
-    <div class="receita-total">0</div>
+    <div class="receita-total">{{totalValor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</div>
     <div class="receitas-despesas">
       <div class="item-painel receitas">
         <div class="text">Receita</div>
-        <div class="valor">0</div>
+        <div class="valor">{{ totalReceitas.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</div>
       </div>
       <div class="item-painel despesas">
         <div class="text">Despesa</div>
-        <div class="valor">0</div>
+        <div class="valor">{{ totalDespesas.toLocaleString('pt-br', { style: 'currency', currency: 'BRL'}) }}</div>
       </div>
     </div>
   </div>

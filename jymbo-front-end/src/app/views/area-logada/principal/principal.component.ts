@@ -16,8 +16,9 @@ export class PrincipalComponent implements OnInit {
   user: User;
   movimentacaoForm: FormGroup;
   listaDeMovimentacoes: Movimentacao[] = [];
-  listaReceitas = [];
-  listaDespesas = [];
+  totalReceitas = 0;
+  totalDespesas = 0;
+  totalValor = 0;
 
   dataMovimentacao = '';
   dataAtual: Date;
@@ -35,9 +36,7 @@ export class PrincipalComponent implements OnInit {
     this.authService.getUser().subscribe((res) => {
       this.user = res;
       this.getDataAtual();
-      this.principal.getMovimentacoes(res.id, this.dataAtual).subscribe((mov: Movimentacao[]) => {
-        this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
-      });
+      this.buscarMovimentacoes(res.id, this.dataAtual);
     });
 
     this.movimentacaoForm = this.formBuilder.group({
@@ -56,6 +55,18 @@ export class PrincipalComponent implements OnInit {
     }
   }
 
+  async buscarMovimentacoes(idUsuario, data) {
+    await this.principal.getMovimentacoes(idUsuario, data).subscribe((mov: Movimentacao[]) => {
+      this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
+      this.totalReceitas = 0;
+      this.totalDespesas = 0;
+      this.totalValor = 0;
+      this.totalReceitas = this.listaDeMovimentacoes.map(mov => mov.tipo === 1 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual);
+      this.totalDespesas = this.listaDeMovimentacoes.map(mov => mov.tipo === 2 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual);
+      this.totalValor = this.totalReceitas - this.totalDespesas;
+    })
+  }
+
   alterarMes(tipo?: string , mov?: Movimentacao) {
     if (tipo === '+') {
       const novoMes = this.dataAtual.getMonth() + 1;
@@ -68,8 +79,8 @@ export class PrincipalComponent implements OnInit {
       const novoMes = novaData.getMonth();
       this.dataAtual.setMonth(novoMes);
     }
-    this.principal.getMovimentacoes(this.user.id, this.dataAtual).subscribe(mov => {
-      this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
+
+    this.buscarMovimentacoes(this.user.id, this.dataAtual).then(res => {
       const mesExtenso = this.dataAtual.toLocaleDateString('default', { month: 'long' });
       const anoExtenso = this.dataAtual.toLocaleDateString('default', { year: '2-digit' });
       this.mesAtual = `${mesExtenso.charAt(0).toLocaleUpperCase() + mesExtenso.slice(1)}/${anoExtenso}`;
@@ -158,8 +169,7 @@ export class PrincipalComponent implements OnInit {
     this.principal.cadastrarMovimentacao(novaMov).subscribe(response => {
       if(response) {
         this.getDataAtual();
-        this.principal.getMovimentacoes(this.user.id, this.dataAtual).subscribe(mov => {
-          this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
+        this.buscarMovimentacoes(this.user.id, this.dataAtual).then(res => {
           this.alterarMes(null, novaMov);
           this.movimentacaoForm = this.formBuilder.group({
             tipo: [1, Validators.required],
@@ -169,6 +179,7 @@ export class PrincipalComponent implements OnInit {
           });
           this.escolherTipoMovimentacao(1);
         });
+
       }
     });
   }
