@@ -208,70 +208,6 @@
   border-bottom: 1px solid lightgray;
 }
 
-.card-mov {
-  background: #ffffff;
-  padding: 15px;
-  border-radius: 5px;
-  min-height: 50px;
-  transition: 0.3s;
-  cursor: pointer;
-  user-select: none;
-  border: 1px solid lightgray;
-  box-shadow: none;
-}
-
-.card-mov:hover {
-  border: 1px solid #0084ff;
-}
-
-.card-mov .superior {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 5px;
-  border-bottom: 1px solid lightgray;
-  margin-bottom: 5px;
-  padding-bottom: 5px;
-  transition: 0.3s;
-}
-
-.card-mov:hover .superior {
-  border-bottom: 1px solid #0084ff;
-}
-
-.card-mov .superior .desc {
-  display: flex;
-  flex-direction: column;
-}
-
-.card-container .data {
-  font-size: 15px;
-  margin: 16px 0;
-  font-weight: 300;
-  color: #424242;
-}
-
-.card-mov .inferior {
-  display: flex;
-}
-
-.card-mov .inferior .tag {
-  font-size: 14px;
-  font-weight: 600;
-  padding: 5px 10px;
-  color: #ffffff;
-  background-color: lightgray;
-  border-radius: 5px;
-}
-
-.card-mov .inferior .tag.vermelho {
-  background-color: rgb(255, 129, 129);
-}
-
-.card-mov .inferior .tag.verde {
-  background-color: rgb(80, 255, 103);
-}
-
 /* FORMULARIO NOVA MOVIMENTACAO */
 .tipo-mov {
   display: flex;
@@ -412,11 +348,6 @@
 
   .body-principal .direito .movimentacoes {
     grid-template-columns: 1fr;
-  }
-
-  .card-mov:hover {
-    border: 1px solid #0084ff;
-    box-shadow: 2px 2px rgb(0, 140, 255);
   }
 }
 

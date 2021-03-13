@@ -3,8 +3,8 @@ import { Movimentacao } from './../../../models/movimentacoes';
 import { PrincipalService } from './../../../services/principal.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth.service';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 
 @Component({
@@ -19,19 +19,23 @@ export class PrincipalComponent implements OnInit {
   listaReceitas = [];
   listaDespesas = [];
 
-  dataAtual = '';
+  dataMovimentacao = '';
+  dataAtual: Date;
+  mesAtual = 'Atual';
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private principal: PrincipalService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.authService.getUser().subscribe((res) => {
       this.user = res;
-      this.principal.getMovimentacoes(res.id).subscribe((mov: Movimentacao[]) => {
+      this.getDataAtual();
+      this.principal.getMovimentacoes(res.id, this.dataAtual).subscribe((mov: Movimentacao[]) => {
         this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
       });
     });
@@ -52,10 +56,34 @@ export class PrincipalComponent implements OnInit {
     }
   }
 
-  verificarData(data: string): boolean {
-    let resp = this.dataAtual !== data;
-    this.dataAtual = data;
-    return resp;
+  alterarMes(tipo?: string , mov?: Movimentacao) {
+    if (tipo === '+') {
+      const novoMes = this.dataAtual.getMonth() + 1;
+      this.dataAtual.setMonth(novoMes);
+    } else if (tipo === '-') {
+      const novoMes = this.dataAtual.getMonth() - 1;
+      this.dataAtual.setMonth(novoMes);
+    } else if (mov) {
+      const novaData = new Date(mov.data);
+      const novoMes = novaData.getMonth();
+      this.dataAtual.setMonth(novoMes);
+    }
+    this.principal.getMovimentacoes(this.user.id, this.dataAtual).subscribe(mov => {
+      this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
+      const mesExtenso = this.dataAtual.toLocaleDateString('default', { month: 'long' });
+      const anoExtenso = this.dataAtual.toLocaleDateString('default', { year: '2-digit' });
+      this.mesAtual = `${mesExtenso.charAt(0).toLocaleUpperCase() + mesExtenso.slice(1)}/${anoExtenso}`;
+      if (this.dataAtual.getMonth() === new Date().getMonth()) {
+        this.mesAtual = 'Atual';
+      }
+      this.cd.detectChanges();
+    });
+    this.dataMovimentacao = '';
+
+  }
+
+  getDataAtual() {
+    this.dataAtual = new Date();
   }
 
   logout() {
@@ -127,11 +155,12 @@ export class PrincipalComponent implements OnInit {
     }
 
     const novaMov = new Movimentacao(null, tipo, descricao, valor, data, this.user.id);
-    console.log(novaMov.data);
     this.principal.cadastrarMovimentacao(novaMov).subscribe(response => {
       if(response) {
-        this.principal.getMovimentacoes(this.user.id).subscribe(mov => {
+        this.getDataAtual();
+        this.principal.getMovimentacoes(this.user.id, this.dataAtual).subscribe(mov => {
           this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
+          this.alterarMes(null, novaMov);
         });
       }
     });

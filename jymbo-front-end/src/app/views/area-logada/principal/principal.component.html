@@ -19,11 +19,11 @@
 
 <div class="container-principal">
   <div class="meses">
-    <button id="previousMonth">
+    <button id="previousMonth" (click)="alterarMes('-')">
       <em class="material-icons">chevron_left</em>
     </button>
-    <span id="mesLabel">Atual</span>
-    <button id="nextMonth">
+    <span id="mesLabel">{{ this.mesAtual }}</span>
+    <button id="nextMonth" (click)="alterarMes('+')">
       <em class="material-icons">chevron_right</em>
     </button>
   </div>
@@ -121,26 +121,10 @@
           <div class="sem-movimentacoes" *ngIf="listaDeMovimentacoes.length === 0">
             Não há movimentações registradas
           </div>
-          <div class="card-container" *ngFor="let mov of listaDeMovimentacoes">
-            <div class="data" *ngIf="verificarData(mov.dataFormatada)"> {{ mov.dataFormatada }} </div>
-            <div class="card-mov">
-              <div class="superior">
-                <div class="desc">
-                  <span class="txt-desc">{{ mov.descricao }}</span>
-                </div>
-                <div class="valor">{{ mov.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</div>
-              </div>
-              <div class="inferior">
-                <div class="tag verde" *ngIf="mov.tipo == 1">
-                  <span>Receita</span>
-                </div>
-                <div class="tag vermelho" *ngIf="mov.tipo == 2">
-                  <span>Despesa</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
+          <app-card-container class="area-movimentacoes"
+            [listaDeMovimentacoes]="listaDeMovimentacoes"
+            [dataMovimentacao]="dataMovimentacao"
+          ></app-card-container>
         </div>
 
       </div>

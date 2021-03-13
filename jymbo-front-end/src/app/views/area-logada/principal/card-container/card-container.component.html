@@ -1,0 +1,19 @@
+<div class="card-container" *ngFor="let mov of listaDeMovimentacoes; let i = index">
+  <div class="data" *ngIf="verificarData(mov)"> {{ mov.dataFormatada }} </div>
+  <div class="card-mov">
+    <div class="superior">
+      <div class="desc">
+        <span class="txt-desc">{{ mov.descricao }}</span>
+      </div>
+      <div class="valor">{{ mov.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</div>
+    </div>
+    <div class="inferior">
+      <div class="tag verde" *ngIf="mov.tipo == 1">
+        <span>Receita</span>
+      </div>
+      <div class="tag vermelho" *ngIf="mov.tipo == 2">
+        <span>Despesa</span>
+      </div>
+    </div>
+  </div>
+</div>

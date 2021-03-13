@@ -1,3 +1,4 @@
+import { CardContainerComponent } from './../views/area-logada/principal/card-container/card-container.component';
 import { PrincipalService } from './../services/principal.service';
 import { AuthInterceptor } from './../auth/auth.interceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -22,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LoginComponent,
     AreaLogadaComponent,
     PrincipalComponent,
+    CardContainerComponent
   ],
   imports: [
     BrowserModule,

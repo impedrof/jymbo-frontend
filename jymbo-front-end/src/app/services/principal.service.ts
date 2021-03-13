@@ -2,7 +2,7 @@ import { tap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Movimentacao } from './../models/movimentacoes';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +11,12 @@ export class PrincipalService {
   private readonly url = 'http://localhost:3000/principal';
   constructor(private http: HttpClient) {}
 
-  getMovimentacoes(idUsuario: number): Observable<Movimentacao[]> {
-    return this.http.get(`${this.url}/${idUsuario}`).pipe(
+  private criarHeaders(contentType: string): any {
+    return { headers: new HttpHeaders({ 'Content-Type': contentType }), responseType: 'text'};
+  }
+
+  getMovimentacoes(idUsuario: number, data: Date): Observable<Movimentacao[]> {
+    return this.http.get(`${this.url}/${idUsuario}/${data}`).pipe(
       map((mov: Movimentacao[]) => {
         if (!mov) {
           throw new Error('Erro ao buscar movimentações.');
