@@ -61,8 +61,8 @@ export class PrincipalComponent implements OnInit {
       this.totalReceitas = 0;
       this.totalDespesas = 0;
       this.totalValor = 0;
-      this.totalReceitas = this.listaDeMovimentacoes.map(mov => mov.tipo === 1 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual);
-      this.totalDespesas = this.listaDeMovimentacoes.map(mov => mov.tipo === 2 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual);
+      this.totalReceitas = this.listaDeMovimentacoes.map(mov => mov?.tipo === 1 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual, 0);
+      this.totalDespesas = this.listaDeMovimentacoes.map(mov => mov?.tipo === 2 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual, 0);
       this.totalValor = this.totalReceitas - this.totalDespesas;
     })
   }
