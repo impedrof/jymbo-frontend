@@ -9,19 +9,19 @@
   background-attachment: fixed;
 }
 
-.logo {
-  width: 94%;
-  margin: 20px auto;
+.header {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  margin: 0 auto 20px auto;
   font-family: "Raleway", sans-serif;
   display: flex;
   justify-content: space-between;
+  background: linear-gradient(180deg, #200f4e, #1b1b2f);
+  padding: 10px 20px;
 }
 
-.logo .logo-area {
-  width: 10%;
-}
-
-.logo .img {
+.header .logo-area .img {
   background-image: url("../../../../assets/svg/jymbo-logo.svg");
   background-repeat: no-repeat;
   background-size: contain;
@@ -30,42 +30,51 @@
   margin-left: 10px;
 }
 
-.logo .logo-titulo {
+.header .logo-area .logo-titulo {
   margin-top: 7px;
   color: #ffffff;
   font-size: 15px;
 }
 
-.logo .barra-menu {
-  border-top-left-radius: 100px;
-  border-bottom-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  background-repeat: no-repeat;
-  width: 80%;
-  background-color: transparent;
-  background-size: contain;
-}
-
-.logo .barra-menu .area-menu {
+.header .barra-menu .area-menu {
   display: flex;
   justify-content: space-between;
   font-family: "Roboto Condensed", sans-serif;
-  margin: 5px;
 }
 
-.logo .barra-menu .area-menu .descricao-boas {
-  visibility: hidden;
+.header .barra-menu .area-menu .botoes-menu {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  color: #fff;
+  font-size: 14px;
 }
 
-.logo .barra-menu .area-menu .botoes-menu input {
+.header .barra-menu .area-menu .area-usuario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header .barra-menu .area-menu .botoes-menu .btn {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
   appearance: none;
   border: none;
-  border-radius: 5px;
-  padding: 5px 20px;
-  background-color: #4400ff;
+  border-radius: 2px;
+  padding: 5px 15px;
   color: #ffffff;
   cursor: pointer;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  transition: 0.3s;
+}
+
+.header .barra-menu .area-menu .botoes-menu .btn:hover {
+  background-color: #0065c4;
 }
 
 .container-principal {
@@ -273,31 +282,23 @@
 }
 
 @media screen and (min-width: 1000px) {
-  .logo .logo-area {
-    width: 20%;
+  .header {
+    width: 94%;
+    background: #2f0a9600;
+    margin-bottom: 30px;
+    padding: 15px 0;
   }
 
-  .logo .img {
+  .header .img {
     width: 50px;
     height: 50px;
-    margin-left: 5px;
   }
 
-  .logo .logo-titulo {
+  .header .logo-titulo {
     margin-top: 5px;
   }
 
-  .logo .barra-menu {
-    width: 60%;
-    background-size: auto;
-    background-color: #ffffff;
-  }
-
-  .logo .barra-menu .area-menu {
-    margin: 20px 40px 20px 70px;
-  }
-
-  .logo .barra-menu .area-menu .descricao-boas {
+  .header .barra-menu .area-menu .descricao-boas {
     visibility: visible;
     font-size: 18px;
     padding-top: 5px;
@@ -352,7 +353,11 @@
 }
 
 @media screen and (min-width: 1340px) {
-  .conteudo-container {
+  .header {
+    width: 1200px;
+    margin: 0 auto;
+  }
+  .container-principal {
     width: 1200px;
     margin: 0 auto;
   }

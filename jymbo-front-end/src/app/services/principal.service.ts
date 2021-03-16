@@ -15,8 +15,19 @@ export class PrincipalService {
     return { headers: new HttpHeaders({ 'Content-Type': contentType }), responseType: 'text'};
   }
 
-  getMovimentacoes(idUsuario: number, data: Date): Observable<Movimentacao[]> {
+  buscarMovimentacoesPorMes(idUsuario: number, data: Date): Observable<Movimentacao[]> {
     return this.http.get(`${this.url}/${idUsuario}/${data}`).pipe(
+      map((mov: Movimentacao[]) => {
+        if (!mov) {
+          throw new Error('Erro ao buscar movimentações.');
+        }
+        return mov;
+      })
+    );
+  }
+
+  buscarTodasMovimentacoes(idUsuario: number): Observable<Movimentacao[]> {
+    return this.http.get(`${this.url}/${idUsuario}`).pipe(
       map((mov: Movimentacao[]) => {
         if (!mov) {
           throw new Error('Erro ao buscar movimentações.');

@@ -1,23 +1,26 @@
-<div class="logo">
+<header class="header">
   <div class="logo-area">
     <div class="img"></div>
     <div class="logo-titulo">JYMBO</div>
   </div>
   <div class="barra-menu">
     <div class="area-menu">
-      <div class="descricao-boas">
-        Seja Bem-vindo, <span id="usuarioID" *ngIf="user">{{ user.nome }}</span>
-      </div>
+
       <div class="botoes-menu">
-        <div class="sair-btn">
-          <input type="button" value="SAIR" (click)="logout()" />
+        <div class="area-usuario">
+          <span class="material-icons">face</span>
+          <span>{{ user.nome }}</span>
         </div>
+        <button type="button" class="btn sair" (click)="logout()">
+          <span>Sair</span>
+          <span class="material-icons">logout</span>
+        </button>
       </div>
     </div>
   </div>
-</div>
+</header>
 
-<div class="container-principal">
+<section class="container-principal">
   <div class="meses">
     <button id="previousMonth" (click)="alterarMes('-')">
       <em class="material-icons">chevron_left</em>
@@ -131,4 +134,4 @@
 
     </form>
   </div>
-</div>
+</section>

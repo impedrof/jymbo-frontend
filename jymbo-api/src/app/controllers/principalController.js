@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
+// Buscar movimentações por mês
 router.get('/:idUser/:dataAtual', async (req, res) => {
   console.log(req.params.dataAtual);
   const dataAtual = new Date(req.params.dataAtual);
@@ -18,6 +19,14 @@ router.get('/:idUser/:dataAtual', async (req, res) => {
   res.send(mov);
 });
 
+// Buscar todas as movimentações
+router.get('/:idUser', async (req, res) => {
+  const query = `SELECT * FROM movimentacaos WHERE usuarioId = :idUsuario`;
+  const mov = await sequelize.query(query, { type: QueryTypes.SELECT, replacements: { idUsuario: req.params.idUser }});
+  res.send(mov);
+});
+
+// Cadastrar movimentação
 router.post('/cadastrar', async (req, res) => {
   const novaMovimentacao = req.body;
   try {

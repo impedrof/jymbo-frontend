@@ -16,9 +16,10 @@ export class PrincipalComponent implements OnInit {
   user: User;
   movimentacaoForm: FormGroup;
   listaDeMovimentacoes: Movimentacao[] = [];
+  novaLista: Movimentacao[] = [];
+  totalValor = 0;
   totalReceitas = 0;
   totalDespesas = 0;
-  totalValor = 0;
 
   dataMovimentacao = '';
   dataAtual: Date;
@@ -36,7 +37,8 @@ export class PrincipalComponent implements OnInit {
     this.authService.getUser().subscribe((res) => {
       this.user = res;
       this.getDataAtual();
-      this.buscarMovimentacoes(res.id, this.dataAtual);
+      this.buscarMovPorMes(res.id, this.dataAtual);
+      this.buscarTodasMov(res.id);
     });
 
     this.movimentacaoForm = this.formBuilder.group({
@@ -53,17 +55,26 @@ export class PrincipalComponent implements OnInit {
         this.logicaHideShow('show');
       }
     }
+
   }
 
-  async buscarMovimentacoes(idUsuario, data) {
-    await this.principal.getMovimentacoes(idUsuario, data).subscribe((mov: Movimentacao[]) => {
+  async buscarTodasMov(idUsuario): Promise<void> {
+    await this.principal.buscarTodasMovimentacoes(idUsuario).subscribe((mov: Movimentacao[]) => {
+      this.novaLista = Movimentacao.instanciarArrayMovimentacao(mov);
+      this.totalValor = 0;
+      const despesa = this.novaLista.map(mov => mov?.tipo === 2 ? mov.valor : 0).reduce((t, vA) => t + vA, 0);
+      const receita = this.novaLista.map(mov => mov?.tipo === 1 ? mov.valor : 0).reduce((t, vA) => t + vA, 0);
+      this.totalValor = receita - despesa;
+    });
+  }
+
+  async buscarMovPorMes(idUsuario, data): Promise<void> {
+    await this.principal.buscarMovimentacoesPorMes(idUsuario, data).subscribe((mov: Movimentacao[]) => {
       this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
       this.totalReceitas = 0;
       this.totalDespesas = 0;
-      this.totalValor = 0;
       this.totalReceitas = this.listaDeMovimentacoes.map(mov => mov?.tipo === 1 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual, 0);
       this.totalDespesas = this.listaDeMovimentacoes.map(mov => mov?.tipo === 2 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual, 0);
-      this.totalValor = this.totalReceitas - this.totalDespesas;
     })
   }
 
@@ -80,7 +91,7 @@ export class PrincipalComponent implements OnInit {
       this.dataAtual.setMonth(novoMes);
     }
 
-    this.buscarMovimentacoes(this.user.id, this.dataAtual).then(res => {
+    this.buscarMovPorMes(this.user.id, this.dataAtual).then(res => {
       const mesExtenso = this.dataAtual.toLocaleDateString('default', { month: 'long' });
       const anoExtenso = this.dataAtual.toLocaleDateString('default', { year: '2-digit' });
       this.mesAtual = `${mesExtenso.charAt(0).toLocaleUpperCase() + mesExtenso.slice(1)}/${anoExtenso}`;
@@ -169,7 +180,8 @@ export class PrincipalComponent implements OnInit {
     this.principal.cadastrarMovimentacao(novaMov).subscribe(response => {
       if(response) {
         this.getDataAtual();
-        this.buscarMovimentacoes(this.user.id, this.dataAtual).then(res => {
+        this.buscarTodasMov(this.user.id);
+        this.buscarMovPorMes(this.user.id, this.dataAtual).then(res => {
           this.alterarMes(null, novaMov);
           this.movimentacaoForm = this.formBuilder.group({
             tipo: [1, Validators.required],
@@ -179,7 +191,6 @@ export class PrincipalComponent implements OnInit {
           });
           this.escolherTipoMovimentacao(1);
         });
-
       }
     });
   }
