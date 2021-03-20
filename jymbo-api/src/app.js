@@ -10,7 +10,12 @@ const Usuario = require('./app/models/user');
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:4200',
+  optionSuccessStatus: 200
+}
+
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
