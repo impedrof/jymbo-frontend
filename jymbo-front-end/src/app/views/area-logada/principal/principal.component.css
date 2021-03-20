@@ -97,22 +97,29 @@
 .container-principal {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 40px min(50px) auto;
+  grid-template-rows: 60px 115px auto;
   font-family: "Oswald", sans-serif;
   font-weight: 300;
   min-height: 90vh;
 }
 
+.container-principal.detalhes {
+  grid-template-rows: 60px 190px auto;
+}
+
 /* MESES */
 .meses {
-  margin: 0 auto;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  flex-direction: row;
-  width: max-content;
+  margin: 10px auto;
   color: #fff;
-  min-width: 150px;
+  background: rgba(35, 35, 60, 1);
+  border-radius: 5px;
+  width: max-content;
+  min-width: 200px;
+  min-height: 35px;
 }
 
 .meses span {
@@ -120,6 +127,9 @@
 }
 
 .meses button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 44px;
   height: 30px;
   background: transparent;
@@ -129,16 +139,87 @@
 }
 
 /* PAINEL */
-.painel {
-  color: #ffffff;
-  margin: 0 auto;
-  width: 80%;
+.painel-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  color: #fff;
+  font-size: 20px;
+  height: 80px;
+  overflow: hidden;
+  transition: 0.5s;
 }
 
-.painel .receita-total {
-  text-align: center;
-  font-size: 30px;
-  margin-bottom: 5px;
+.painel-cards.detalhes {
+  height: auto;
+}
+
+/* DETALHES */
+.mostrar-detalhes {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  color: rgba(92, 86, 255, 0.7);
+  margin-left: 10px;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.card-painel {
+  padding: 0 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-painel:nth-child(1) {
+  grid-column: 1/3;
+}
+
+.card-painel:nth-child(1) .card-painel-body .cifrao {
+  font-size: 16px;
+  line-height: 40px;
+}
+
+.card-painel:nth-child(1) .card-painel-body .valor-total {
+  font-size: 40px;
+}
+
+.card-painel-titulo {
+  font-size: 16px;
+  border-bottom: 1px solid rgba(13, 3, 255, 67%);
+  width: max-content;
+}
+
+.card-painel-titulo.saldo {
+  border-bottom: 1px solid rgba(3, 255, 171, 0.67);
+}
+
+.card-painel-titulo.receita {
+  border-bottom: 1px solid rgba(13, 3, 255, 67%);
+}
+
+.card-painel-titulo.despesa {
+  border-bottom: 1px solid rgb(255, 129, 129);
+}
+
+.card-painel-body {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.card-painel-body .cifrao {
+  font-size: 14px;
+  line-height: 26px;
+}
+
+.card-painel-body .valor-total {
+  font-size: 25px;
 }
 
 /* CONTAINER CONTEÚDO */
@@ -301,13 +382,19 @@
 }
 
 @media screen and (min-width: 1000px) {
-  .container-principal {
+  .container-principal,
+  .header {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .container-principal,
+  .container-principal.detalhes {
     min-height: auto;
     grid-template-rows: auto auto auto;
   }
 
   .header {
-    width: 94%;
     background: #2f0a9600;
     margin-bottom: 30px;
     padding: 15px 0;
@@ -330,13 +417,65 @@
 
   /* MESES */
   .meses {
+    background: rgba(35, 35, 60, 1);
+    border-radius: 5px;
     min-width: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 40px;
   }
 
   /* PAINEL */
-  .painel {
-    padding: 20px 20px 40px 20px;
-    width: 40%;
+  .painel-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: auto;
+  }
+
+  .painel-cards.detalhes {
+    height: auto;
+  }
+
+  .card-painel {
+    padding: 20px;
+    background: rgba(35, 35, 60, 1);
+    align-items: flex-start;
+  }
+
+  /* DETALHES */
+  .mostrar-detalhes {
+    display: none;
+  }
+
+  .card-painel:nth-child(1) {
+    grid-column: 1/2;
+  }
+
+  .card-painel-titulo {
+    font-size: 16px;
+    border-bottom: 1px solid rgba(13, 3, 255, 67%);
+    width: max-content;
+  }
+
+  .card-painel-titulo.saldo {
+    border-bottom: 1px solid rgba(3, 255, 171, 0.67);
+  }
+
+  .card-painel-titulo.receita {
+    border-bottom: 1px solid rgba(13, 3, 255, 67%);
+  }
+
+  .card-painel-titulo.despesa {
+    border-bottom: 1px solid rgb(255, 129, 129);
+  }
+
+  .card-painel-body {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
   }
 
   .area-botoes {
@@ -387,12 +526,8 @@
 }
 
 @media screen and (min-width: 1340px) {
-  .header {
-    width: 1200px;
-    margin: 0 auto;
-  }
+  .header,
   .container-principal {
     width: 1200px;
-    margin: 0 auto;
   }
 }

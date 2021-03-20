@@ -27,14 +27,49 @@
       </button>
     </div>
     <div class="painel">
-      <div class="receita-total">
-        {{
-          totalValor.toLocaleString("pt-br", {
-            style: "currency",
-            currency: "BRL"
-          })
-        }}
+      <div class="painel-cards">
+        <div class="card-painel receita-total">
+          <div class="card-painel-titulo saldo">
+            Saldo total
+          </div>
+          <div class="card-painel-body">
+            <span class="cifrao">R$</span>
+            <div class="valor-total">
+              {{ totalValor.toLocaleString("pt-br", { minimumFractionDigits: 2}) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="card-painel receita-total">
+          <div class="card-painel-titulo receita">
+            Receita total
+          </div>
+          <div class="card-painel-body">
+            <span class="cifrao">R$</span>
+            <div class="valor-total">
+              {{ totalReceita.toLocaleString("pt-br", { minimumFractionDigits: 2}) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="card-painel receita-total">
+          <div class="card-painel-titulo despesa">
+            Despesa total
+          </div>
+          <div class="card-painel-body">
+            <span class="cifrao">R$</span>
+            <div class="valor-total">
+              {{ totalDespesa.toLocaleString("pt-br", { minimumFractionDigits: 2}) }}
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div class="mostrar-detalhes" (click)="mostrarOcutarDetalhes()">
+        <span class="descricao">Mostrar detalhes</span>
+        <span class="material-icons">keyboard_arrow_down</span>
+      </div>
+
     </div>
 
     <div class="conteudo-container">
@@ -153,7 +188,7 @@
                 <div class="text">Receita</div>
                 <div class="valor">
                   {{
-                    totalReceitas.toLocaleString("pt-br", {
+                    mesReceitas.toLocaleString("pt-br", {
                       style: "currency",
                       currency: "BRL"
                     })
@@ -164,7 +199,7 @@
                 <div class="text">Despesa</div>
                 <div class="valor">
                   {{
-                    totalDespesas.toLocaleString("pt-br", {
+                    mesDespesas.toLocaleString("pt-br", {
                       style: "currency",
                       currency: "BRL"
                     })

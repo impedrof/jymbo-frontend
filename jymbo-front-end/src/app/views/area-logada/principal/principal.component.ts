@@ -17,9 +17,13 @@ export class PrincipalComponent implements OnInit {
   movimentacaoForm: FormGroup;
   listaDeMovimentacoes: Movimentacao[] = [];
   novaLista: Movimentacao[] = [];
+
   totalValor = 0;
-  totalReceitas = 0;
-  totalDespesas = 0;
+  totalReceita = 0;
+  totalDespesa = 0;
+
+  mesReceitas = 0;
+  mesDespesas = 0;
 
   dataMovimentacao = '';
   dataAtual: Date;
@@ -58,23 +62,45 @@ export class PrincipalComponent implements OnInit {
 
   }
 
+  mostrarOcutarDetalhes() {
+    const containerPrincipal = document.querySelector('.container-principal');
+    const painelCards = document.querySelector('.painel-cards');
+    const descricao = document.querySelector('.mostrar-detalhes .descricao');
+    const icone = document.querySelector('.mostrar-detalhes .material-icons');
+
+
+    if (!containerPrincipal.classList.contains('detalhes')) {
+      containerPrincipal.classList.add('detalhes');
+      painelCards.classList.add('detalhes');
+      descricao.innerHTML = 'Ocultar detalhes';
+      icone.innerHTML = 'keyboard_arrow_up';
+    } else {
+      containerPrincipal.classList.remove('detalhes');
+      painelCards.classList.remove('detalhes');
+      descricao.innerHTML = 'Mostrar detalhes';
+      icone.innerHTML = 'keyboard_arrow_down';
+    }
+  }
+
   async buscarTodasMov(idUsuario): Promise<void> {
     await this.principal.buscarTodasMovimentacoes(idUsuario).subscribe((mov: Movimentacao[]) => {
       this.novaLista = Movimentacao.instanciarArrayMovimentacao(mov);
       this.totalValor = 0;
-      const despesa = this.novaLista.map(mov => mov?.tipo === 2 ? mov.valor : 0).reduce((t, vA) => t + vA, 0);
-      const receita = this.novaLista.map(mov => mov?.tipo === 1 ? mov.valor : 0).reduce((t, vA) => t + vA, 0);
-      this.totalValor = receita - despesa;
+      this.totalReceita = 0;
+      this.totalDespesa = 0;
+      this.totalReceita = this.novaLista.map(mov => mov?.tipo === 1 ? mov.valor : 0).reduce((t, vA) => t + vA, 0);
+      this.totalDespesa = this.novaLista.map(mov => mov?.tipo === 2 ? mov.valor : 0).reduce((t, vA) => t + vA, 0);
+      this.totalValor = this.totalReceita - this.totalDespesa;
     });
   }
 
   async buscarMovPorMes(idUsuario, data): Promise<void> {
     await this.principal.buscarMovimentacoesPorMes(idUsuario, data).subscribe((mov: Movimentacao[]) => {
       this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
-      this.totalReceitas = 0;
-      this.totalDespesas = 0;
-      this.totalReceitas = this.listaDeMovimentacoes.map(mov => mov?.tipo === 1 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual, 0);
-      this.totalDespesas = this.listaDeMovimentacoes.map(mov => mov?.tipo === 2 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual, 0);
+      this.mesReceitas = 0;
+      this.mesDespesas = 0;
+      this.mesReceitas = this.listaDeMovimentacoes.map(mov => mov?.tipo === 1 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual, 0);
+      this.mesDespesas = this.listaDeMovimentacoes.map(mov => mov?.tipo === 2 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual, 0);
     })
   }
 
@@ -94,7 +120,7 @@ export class PrincipalComponent implements OnInit {
     this.buscarMovPorMes(this.user.id, this.dataAtual).then(res => {
       const mesExtenso = this.dataAtual.toLocaleDateString('default', { month: 'long' });
       const anoExtenso = this.dataAtual.toLocaleDateString('default', { year: '2-digit' });
-      this.mesAtual = `${mesExtenso.charAt(0).toLocaleUpperCase() + mesExtenso.slice(1)}/${anoExtenso}`;
+      this.mesAtual = `${mesExtenso.charAt(0).toLocaleUpperCase() + mesExtenso.slice(1)} / ${anoExtenso}`;
       if (this.dataAtual.getMonth() === new Date().getMonth()) {
         this.mesAtual = 'Atual';
       }
