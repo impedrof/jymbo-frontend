@@ -1,137 +1,199 @@
-<header class="header">
-  <div class="logo-area">
-    <div class="img"></div>
-    <div class="logo-titulo">JYMBO</div>
-  </div>
-  <div class="barra-menu">
-    <div class="area-menu">
-
-      <div class="botoes-menu">
-        <div class="area-usuario">
-          <span class="material-icons">face</span>
-          <span>{{ user.nome }}</span>
-        </div>
-        <button type="button" class="btn sair" (click)="logout()">
-          <span>Sair</span>
-          <span class="material-icons">logout</span>
-        </button>
-      </div>
+<div class="container">
+  <header class="header">
+    <div class="logo-area">
+      <div class="img"></div>
+      <div class="logo-titulo">JYMBO</div>
     </div>
-  </div>
-</header>
-
-<section class="container-principal">
-  <div class="meses">
-    <button id="previousMonth" (click)="alterarMes('-')">
-      <em class="material-icons">chevron_left</em>
-    </button>
-    <span id="mesLabel">{{ this.mesAtual }}</span>
-    <button id="nextMonth" (click)="alterarMes('+')">
-      <em class="material-icons">chevron_right</em>
-    </button>
-  </div>
-  <div class="painel">
-    <div class="receita-total">{{totalValor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</div>
-    <div class="receitas-despesas">
-      <div class="item-painel receitas">
-        <div class="text">Receita</div>
-        <div class="valor">{{ totalReceitas.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</div>
-      </div>
-      <div class="item-painel despesas">
-        <div class="text">Despesa</div>
-        <div class="valor">{{ totalDespesas.toLocaleString('pt-br', { style: 'currency', currency: 'BRL'}) }}</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="conteudo-container">
-    <div class="area-botoes">
-      <div class="btn incluir" (click)="showHideAddMov()">
-        <span class="material-icons">add_circle_outline</span>
-        <div class="text-btn">Incluir</div>
-      </div>
-    </div>
-    <form class="body-principal" [formGroup]="movimentacaoForm" (ngSubmit)="cadastrarMovimentacao()">
-      <div class="esquerdo">
-        <div class="titulo-secao">
-          <h3>Adicionar Movimentação</h3>
-        </div>
-
-        <div class="tipo-mov">
-          <div class="componente-escolha">
-            <div id="opcao1" class="opcao ativa" (click)="escolherTipoMovimentacao(1)">Receita</div>
-            <div id="opcao2" class="opcao" (click)="escolherTipoMovimentacao(2)">Despesa</div>
-          </div>
-          <span class="error-campo" *ngIf="checkErrorCamp(movimentacaoForm, 'tipo')">
-            {{ getErrorMessage(movimentacaoForm, 'tipo') }}
-          </span>
-        </div>
-
-        <div class="campo-input descricao">
-          <label for="descricao">Descrição</label>
-          <input
-            type="text"
-            name="descricao"
-            id="descricao"
-            formControlName="descricao"
-            [ngClass]="{'error-campo': checkErrorCamp(movimentacaoForm, 'descricao')}"
-          >
-          <span class="error-campo" *ngIf="checkErrorCamp(movimentacaoForm, 'descricao')">
-            {{ getErrorMessage(movimentacaoForm, 'descricao') }}
-          </span>
-        </div>
-
-        <div class="campo-input valor">
-          <label for="valor">Valor</label>
-          <input
-            type="text"
-            name="valor"
-            id="valor"
-            formControlName="valor"
-            [ngClass]="{'error-campo': checkErrorCamp(movimentacaoForm, 'valor')}"
-          >
-          <span class="error-campo" *ngIf="checkErrorCamp(movimentacaoForm, 'valor')">
-            {{ getErrorMessage(movimentacaoForm, 'valor') }}
-          </span>
-        </div>
-
-        <div class="campo-input data">
-          <label for="data">Data</label>
-          <input
-            type="date"
-            name="data"
-            id="data"
-            formControlName="data"
-            [ngClass]="{'error-campo': checkErrorCamp(movimentacaoForm, 'data')}"
-          >
-          <span class="error-campo" *ngIf="checkErrorCamp(movimentacaoForm, 'data')">
-            {{ getErrorMessage(movimentacaoForm, 'data') }}
-          </span>
-        </div>
-
-        <div class="area-botao-confirmar">
-          <button class="btn primary">
-            Salvar
+    <div class="barra-menu">
+      <div class="area-menu">
+        <div class="botoes-menu">
+          <button type="button" class="btn sair" (click)="logout()">
+            <span>Sair</span>
+            <span class="material-icons">logout</span>
           </button>
         </div>
-
       </div>
-      <div class="direito">
-        <div class="titulo-secao">
-          <h3>Lista de Movimentações</h3>
+    </div>
+  </header>
+
+  <section class="container-principal">
+    <div class="meses">
+      <button id="previousMonth" (click)="alterarMes('-')">
+        <em class="material-icons">chevron_left</em>
+      </button>
+      <span id="mesLabel">{{ this.mesAtual }}</span>
+      <button id="nextMonth" (click)="alterarMes('+')">
+        <em class="material-icons">chevron_right</em>
+      </button>
+    </div>
+    <div class="painel">
+      <div class="receita-total">
+        {{
+          totalValor.toLocaleString("pt-br", {
+            style: "currency",
+            currency: "BRL"
+          })
+        }}
+      </div>
+    </div>
+
+    <div class="conteudo-container">
+      <div class="area-botoes">
+        <div class="btn incluir" (click)="showHideAddMov()">
+          <span class="material-icons">add_circle_outline</span>
+          <div class="text-btn">Incluir</div>
         </div>
-        <div class="area-movimentacoes">
-          <div class="sem-movimentacoes" *ngIf="listaDeMovimentacoes.length === 0">
-            Não há movimentações registradas
+      </div>
+      <form
+        class="body-principal"
+        [formGroup]="movimentacaoForm"
+        (ngSubmit)="cadastrarMovimentacao()"
+      >
+        <div class="esquerdo">
+          <div class="secao">
+            <div class="titulo-secao">
+              <h3>Adicionar Movimentação</h3>
+            </div>
+
+            <div class="tipo-mov">
+              <div class="componente-escolha">
+                <div
+                  id="opcao1"
+                  class="opcao ativa"
+                  (click)="escolherTipoMovimentacao(1)"
+                >
+                  Receita
+                </div>
+                <div
+                  id="opcao2"
+                  class="opcao"
+                  (click)="escolherTipoMovimentacao(2)"
+                >
+                  Despesa
+                </div>
+              </div>
+              <span
+                class="msg-erro"
+                *ngIf="checkErrorCamp(movimentacaoForm, 'tipo')"
+              >
+                {{ getErrorMessage(movimentacaoForm, "tipo") }}
+              </span>
+            </div>
+
+            <div class="campo-input descricao">
+              <label for="descricao">Descrição</label>
+              <input
+                type="text"
+                name="descricao"
+                id="descricao"
+                formControlName="descricao"
+                [ngClass]="{
+                  'error-campo': checkErrorCamp(movimentacaoForm, 'descricao')
+                }"
+              />
+              <span
+                class="msg-erro"
+                *ngIf="checkErrorCamp(movimentacaoForm, 'descricao')"
+              >
+                {{ getErrorMessage(movimentacaoForm, "descricao") }}
+              </span>
+            </div>
+
+            <div class="campo-input valor">
+              <label for="valor">Valor</label>
+              <input
+                type="text"
+                name="valor"
+                id="valor"
+                formControlName="valor"
+                [ngClass]="{
+                  'error-campo': checkErrorCamp(movimentacaoForm, 'valor')
+                }"
+              />
+              <span
+                class="msg-erro"
+                *ngIf="checkErrorCamp(movimentacaoForm, 'valor')"
+              >
+                {{ getErrorMessage(movimentacaoForm, "valor") }}
+              </span>
+            </div>
+
+            <div class="campo-input data">
+              <label for="data">Data</label>
+              <input
+                type="date"
+                name="data"
+                id="data"
+                formControlName="data"
+                [ngClass]="{
+                  'error-campo': checkErrorCamp(movimentacaoForm, 'data')
+                }"
+              />
+              <span
+                class="msg-erro"
+                *ngIf="checkErrorCamp(movimentacaoForm, 'data')"
+              >
+                {{ getErrorMessage(movimentacaoForm, "data") }}
+              </span>
+            </div>
+
+            <div class="area-botao-confirmar">
+              <button class="btn primary">Salvar</button>
+            </div>
           </div>
-          <app-card-container class="area-movimentacoes"
-            [listaDeMovimentacoes]="listaDeMovimentacoes"
-            [dataMovimentacao]="dataMovimentacao"
-          ></app-card-container>
         </div>
 
-      </div>
+        <div class="direito">
+          <div class="receitas-despesas secao">
+            <div class="titulo-secao">
+              <h3>Planejamento do mês</h3>
+            </div>
+            <div class="conteudo-receitas-despesas">
+              <div class="item-painel receitas">
+                <div class="text">Receita</div>
+                <div class="valor">
+                  {{
+                    totalReceitas.toLocaleString("pt-br", {
+                      style: "currency",
+                      currency: "BRL"
+                    })
+                  }}
+                </div>
+              </div>
+              <div class="item-painel despesas">
+                <div class="text">Despesa</div>
+                <div class="valor">
+                  {{
+                    totalDespesas.toLocaleString("pt-br", {
+                      style: "currency",
+                      currency: "BRL"
+                    })
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
 
-    </form>
-  </div>
-</section>
+          <div class="secao">
+            <div class="titulo-secao">
+              <h3>Lista de Movimentações</h3>
+            </div>
+            <div class="area-movimentacoes">
+              <div
+                class="sem-movimentacoes"
+                *ngIf="listaDeMovimentacoes.length === 0"
+              >
+                Não há movimentações registradas
+              </div>
+              <app-card-container
+                class="area-movimentacoes"
+                [listaDeMovimentacoes]="listaDeMovimentacoes"
+                [dataMovimentacao]="dataMovimentacao"
+              ></app-card-container>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>

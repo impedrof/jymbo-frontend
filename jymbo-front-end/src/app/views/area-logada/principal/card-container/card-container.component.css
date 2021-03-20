@@ -46,12 +46,12 @@
 }
 
 .card-mov .inferior .tag {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
   padding: 5px 10px;
   color: #ffffff;
   background-color: lightgray;
   border-radius: 5px;
+  font-family: "Roboto", sans-serif;
 }
 
 .card-mov .inferior .tag.vermelho {
@@ -59,7 +59,7 @@
 }
 
 .card-mov .inferior .tag.verde {
-  background-color: rgb(80, 255, 103);
+  background-color: rgba(13, 3, 255, 67%);
 }
 
 @media screen and (min-width: 1000px) {
