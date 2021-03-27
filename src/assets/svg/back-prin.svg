@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.143" y1="0.096" x2="0.044" y2="1.506" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#9bffee"/>
+      <stop offset="1" stop-color="#7474f9"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.429" y1="0.616" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#3900fb"/>
+      <stop offset="1" stop-color="#1d007e"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="0.646" y1="0.462" x2="-0.055" y2="-0.036" xlink:href="#linear-gradient-2"/>
+    <clipPath id="clip-Web_1920_2">
+      <rect width="1920" height="1080"/>
+    </clipPath>
+  </defs>
+  <g id="Web_1920_2" data-name="Web 1920 – 2" clip-path="url(#clip-Web_1920_2)">
+    <rect width="1920" height="1080" fill="url(#linear-gradient)"/>
+    <path id="Caminho_1" data-name="Caminho 1" d="M-34.8,2212.932C281.329,1705.379,1148.52,1911.3,1148.52,1911.3s-118.912-629.366,258.127-629.366,426.345-104.411,426.345-104.411V2285.439h-1946.1S-350.937,2720.485-34.8,2212.932Z" transform="translate(104 -1196)" fill="url(#linear-gradient-2)"/>
+    <path id="Caminho_2" data-name="Caminho 2" d="M-194.1,1568.394s580.06-98.164,609.063-455.124-718.382,0-718.382,0" transform="translate(-86 -1040)" fill="url(#linear-gradient-3)"/>
+  </g>
+</svg>

@@ -1,3 +1,1 @@
-# Jymbo - Finanças Pessoais
-
-Trabalho de conclusão de curso - FATEC
+# JYMBO FRONT-END - ANGULAR

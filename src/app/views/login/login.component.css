@@ -1,0 +1,215 @@
+.background-login {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(../../../assets/svg/background-login.svg);
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.container-login-cadastro {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 40px;
+  background: rgba(255, 255, 255);
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.titulo-login {
+  display: flex;
+  flex-direction: row;
+}
+
+.titulo-login span {
+  width: 75%;
+}
+
+.titulo-login .logo {
+  width: 25%;
+  height: 80px;
+  background-image: url(../../../assets/svg/jymbo-logo.svg);
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: contain;
+}
+
+.btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  appearance: none;
+  border: none;
+  font-family: "Roboto", sans-serif;
+  background-color: #ffffff;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+  height: 30px;
+  box-shadow: 2px 2px 2px #000;
+  outline: none;
+}
+
+.login,
+.cadastro {
+  width: 100%;
+  transition: 0.5s;
+  opacity: 1;
+  animation: opacidade 0.5s;
+}
+
+/* CAMPOS LOGIN/CADASTRO */
+.login .titulo-login,
+.cadastro .titulo-cadastro {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  font-weight: 300;
+  font-family: "Roboto", sans-serif;
+}
+
+.input-text {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  height: 66px;
+}
+
+.input-text label {
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.input-text input {
+  height: 30px;
+  padding: 0 3px;
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 16px;
+  outline: none;
+  color: #585858cf;
+  border: none;
+  border-bottom: 1px solid #c8c8c8;
+  transition: 0.3s ease-in;
+}
+
+.input-text input:focus {
+  border-bottom: 2px solid #2021e494;
+}
+
+.input-text input.error {
+  border-bottom: 1px solid #f64747;
+}
+
+.input-text input.error:focus {
+  border-bottom: 2px solid #f64747;
+}
+
+.error-campo {
+  font-size: 10px;
+  margin-top: 5px;
+  color: #f64747;
+  opacity: 0.9;
+  animation: opacidade 0.5s;
+}
+
+.error-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 300;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  color: #fff;
+  animation: opacidade 0.5s;
+  background-color: #f64747;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.error-form span:nth-child(1) {
+  font-size: 20px;
+}
+
+.error-form span:nth-child(2) {
+  padding-left: 10px;
+}
+
+@keyframes opacidade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* CADASTRO */
+/* BTN LOGIN/CADASTRO */
+.btns-login,
+.botoes-cadastro {
+  margin-top: 35px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-logar,
+.btn-cadastrar {
+  color: #ffffff;
+  background-color: #380cec;
+}
+
+.btn-logar:active,
+.btn-cadastrar:active {
+  background-color: #552dfb;
+}
+
+.btn-voltar {
+  color: #333333;
+  border-radius: 2px;
+  border: 1px solid #c8c8c8;
+  background-color: #f4f4f4;
+}
+
+.btn-voltar:active {
+  background-color: #fbfbfb;
+}
+
+.btn-abrir-cadastro {
+  color: #ffffff;
+  background-color: #38b9ff;
+}
+
+.btn-abrir-cadastro:active {
+  background-color: #6acbff;
+}
+
+/* BTN VOLTAR */
+.btn-voltar em {
+  padding-left: 5px;
+  font-size: 16px;
+}
+
+@media screen and (min-width: 499px) {
+  .container-login-cadastro {
+    padding: 60px;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .container-login-cadastro {
+    padding: 40px;
+    width: 400px;
+    height: auto;
+    border-radius: 5px;
+  }
+}
+
+@media screen and (min-width: 980px) {
+}
