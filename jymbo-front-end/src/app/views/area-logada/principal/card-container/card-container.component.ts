@@ -23,7 +23,7 @@ export class CardContainerComponent implements OnInit, OnChanges {
   }
 
   verificarData(data: Movimentacao): boolean {
-    let resp = this.dataMovInterna !== data.dataFormatada;
+    const resp = this.dataMovInterna !== data.dataFormatada;
     this.dataMovInterna = data.dataFormatada;
     return resp;
   }

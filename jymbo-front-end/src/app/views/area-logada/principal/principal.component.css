@@ -101,7 +101,7 @@
 .container-principal {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 60px 115px auto;
+  grid-template-rows: 60px 115px max-content max-content;
   font-family: "Oswald", sans-serif;
   font-weight: 300;
   min-height: 90vh;
@@ -139,6 +139,7 @@
   border: none;
   color: #fff;
   cursor: pointer;
+  transition: .5s;
 }
 
 /* PAINEL */
@@ -422,6 +423,24 @@
     margin-top: 0;
     margin-bottom: 0;
     min-height: 40px;
+  }
+
+  .meses button {
+    height: 100%;
+  }
+
+  .meses button:nth-child(1) {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  .meses button:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .meses button:hover {
+    background-color: rgba(45, 45, 70, 1);
   }
 
   /* PAINEL */

@@ -1,9 +1,9 @@
-import { User } from './../../../models/user';
-import { Movimentacao } from './../../../models/movimentacoes';
-import { PrincipalService } from './../../../services/principal.service';
+import { User } from '../../../models/user';
+import { Movimentacao } from '../../../models/movimentacoes';
+import { PrincipalService } from '../../../services/principal.service';
 import { Router } from '@angular/router';
-import { AuthService } from './../../../services/auth.service';
-import { ChangeDetectorRef, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { AuthService } from '../../../services/auth.service';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 
@@ -16,7 +16,6 @@ export class PrincipalComponent implements OnInit {
   user: User;
   movimentacaoForm: FormGroup;
   listaDeMovimentacoes: Movimentacao[] = [];
-  novaLista: Movimentacao[] = [];
 
   totalValor = 0;
   totalReceita = 0;
@@ -50,24 +49,23 @@ export class PrincipalComponent implements OnInit {
       descricao: [null, Validators.required],
       valor: [null, Validators.required],
       data: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), Validators.required]
-    })
+    });
 
     window.onresize = () => {
-      if(window.screen.width <= 1000) {
+      if (window.screen.width <= 1000) {
         this.logicaHideShow('hide');
       } else {
         this.logicaHideShow('show');
       }
-    }
+    };
 
   }
 
-  mostrarOcutarDetalhes() {
-    const containerPrincipal = document.querySelector('.container-principal');
-    const painelCards = document.querySelector('.painel-cards');
-    const descricao = document.querySelector('.mostrar-detalhes .descricao');
-    const icone = document.querySelector('.mostrar-detalhes .material-icons');
-
+  mostrarOcutarDetalhes(): void {
+    const containerPrincipal = document.querySelector<HTMLElement>('.container-principal');
+    const painelCards = document.querySelector<HTMLElement>('.painel-cards');
+    const descricao = document.querySelector<HTMLElement>('.mostrar-detalhes .descricao');
+    const icone = document.querySelector<HTMLElement>('.mostrar-detalhes .material-icons');
 
     if (!containerPrincipal.classList.contains('detalhes')) {
       containerPrincipal.classList.add('detalhes');
@@ -84,27 +82,37 @@ export class PrincipalComponent implements OnInit {
 
   async buscarTodasMov(idUsuario): Promise<void> {
     await this.principal.buscarTodasMovimentacoes(idUsuario).subscribe((mov: Movimentacao[]) => {
-      this.novaLista = Movimentacao.instanciarArrayMovimentacao(mov);
-      this.totalValor = 0;
-      this.totalReceita = 0;
-      this.totalDespesa = 0;
-      this.totalReceita = this.novaLista.map(mov => mov?.tipo === 1 ? mov.valor : 0).reduce((t, vA) => t + vA, 0);
-      this.totalDespesa = this.novaLista.map(mov => mov?.tipo === 2 ? mov.valor : 0).reduce((t, vA) => t + vA, 0);
+      const novaLista = Movimentacao.instanciarArrayMovimentacao(mov);
+      this.resetarValorMovimentacoesTotais();
+      this.totalReceita = novaLista.map(movi => movi?.tipo === 1 ? movi.valor : 0).reduce((t, vA) => t + vA, 0);
+      this.totalDespesa = novaLista.map(movim => movim?.tipo === 2 ? movim.valor : 0).reduce((t, vA) => t + vA, 0);
       this.totalValor = this.totalReceita - this.totalDespesa;
     });
+  }
+
+  resetarValorMovimentacoesTotais(): void {
+    this.totalValor = 0;
+    this.totalReceita = 0;
+    this.totalDespesa = 0;
   }
 
   async buscarMovPorMes(idUsuario, data): Promise<void> {
     await this.principal.buscarMovimentacoesPorMes(idUsuario, data).subscribe((mov: Movimentacao[]) => {
       this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
-      this.mesReceitas = 0;
-      this.mesDespesas = 0;
-      this.mesReceitas = this.listaDeMovimentacoes.map(mov => mov?.tipo === 1 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual, 0);
-      this.mesDespesas = this.listaDeMovimentacoes.map(mov => mov?.tipo === 2 ? mov.valor : 0).reduce((total, valorAtual) => total + valorAtual, 0);
-    })
+      this.resetarValorMovimentacoesMensais();
+      this.mesReceitas = this.listaDeMovimentacoes.map(movi => movi?.tipo === 1 ? movi.valor : 0)
+        .reduce((total, valorAtual) => total + valorAtual, 0);
+      this.mesDespesas = this.listaDeMovimentacoes.map(movim => movim?.tipo === 2 ? movim.valor : 0)
+        .reduce((total, valorAtual) => total + valorAtual, 0);
+    });
   }
 
-  alterarMes(tipo?: string , mov?: Movimentacao) {
+  resetarValorMovimentacoesMensais(): void {
+    this.mesReceitas = 0;
+    this.mesDespesas = 0;
+  }
+
+  alterarMes(tipo?: string , mov?: Movimentacao): void {
     if (tipo === '+') {
       const novoMes = this.dataAtual.getMonth() + 1;
       this.dataAtual.setMonth(novoMes);
@@ -130,16 +138,16 @@ export class PrincipalComponent implements OnInit {
 
   }
 
-  getDataAtual() {
+  getDataAtual(): void {
     this.dataAtual = new Date();
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
     this.router.navigateByUrl('/login');
   }
 
-  logicaHideShow(tipo: string) {
+  logicaHideShow(tipo: string): void {
     const divEsquerdo = document.querySelector('.container-cadastro');
     if (tipo === 'hide') {
       divEsquerdo.classList.remove('show');
@@ -152,7 +160,7 @@ export class PrincipalComponent implements OnInit {
 
   showHideAddMov(): void {
     const divEsquerdo = document.querySelector('.container-cadastro');
-    if(divEsquerdo.classList.contains('show')) {
+    if (divEsquerdo.classList.contains('show')) {
       this.logicaHideShow('hide');
     } else {
       this.logicaHideShow('show');
@@ -160,20 +168,20 @@ export class PrincipalComponent implements OnInit {
   }
 
   escolherTipoMovimentacao(tipo: number): void {
-    const opcao1 = document.querySelector("#opcao1");
-    const opcao2 = document.querySelector("#opcao2");
-    if(tipo === 1) {
+    const opcao1 = document.querySelector('#opcao1');
+    const opcao2 = document.querySelector('#opcao2');
+    if (tipo === 1) {
       opcao1.classList.add('ativa');
       opcao2.classList.remove('ativa');
       this.movimentacaoForm.patchValue({
         tipo: 1
-      })
+      });
     } else {
       opcao2.classList.add('ativa');
       opcao1.classList.remove('ativa');
       this.movimentacaoForm.patchValue({
         tipo: 2
-      })
+      });
     }
   }
 
@@ -204,7 +212,7 @@ export class PrincipalComponent implements OnInit {
 
     const novaMov = new Movimentacao(null, tipo, descricao, valor, data, this.user.id);
     this.principal.cadastrarMovimentacao(novaMov).subscribe(response => {
-      if(response) {
+      if (response) {
         this.getDataAtual();
         this.buscarTodasMov(this.user.id);
         this.buscarMovPorMes(this.user.id, this.dataAtual).then(res => {
