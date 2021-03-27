@@ -1,19 +1,16 @@
 import { tap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { Movimentacao } from './../models/movimentacoes';
+import { Movimentacao } from '../models/movimentacoes';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PrincipalService {
-  private readonly url = 'http://localhost:3000/principal';
+  private readonly url = `${environment.api}/principal`;
   constructor(private http: HttpClient) {}
-
-  private criarHeaders(contentType: string): any {
-    return { headers: new HttpHeaders({ 'Content-Type': contentType }), responseType: 'text'};
-  }
 
   buscarMovimentacoesPorMes(idUsuario: number, data: Date): Observable<Movimentacao[]> {
     return this.http.get(`${this.url}/${idUsuario}/${data}`).pipe(

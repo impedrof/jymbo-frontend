@@ -8,12 +8,13 @@ import {
 import { Injectable, ErrorHandler } from '@angular/core';
 import { throwError, Observable, BehaviorSubject, of } from 'rxjs';
 import { catchError, retry, tap, map } from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  readonly url = 'http://localhost:3000/auth';
+  readonly url = `${environment.api}/auth`;
 
   private subjUser$: BehaviorSubject<any> = new BehaviorSubject(null);
   private subLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
