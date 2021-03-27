@@ -140,7 +140,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   logicaHideShow(tipo: string) {
-    const divEsquerdo = document.querySelector('.body-principal .esquerdo');
+    const divEsquerdo = document.querySelector('.container-cadastro');
     if (tipo === 'hide') {
       divEsquerdo.classList.remove('show');
       divEsquerdo.classList.add('hide');
@@ -151,7 +151,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   showHideAddMov(): void {
-    const divEsquerdo = document.querySelector('.body-principal .esquerdo');
+    const divEsquerdo = document.querySelector('.container-cadastro');
     if(divEsquerdo.classList.contains('show')) {
       this.logicaHideShow('hide');
     } else {
