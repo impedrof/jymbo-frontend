@@ -13,11 +13,11 @@
 
       <div class="campos">
         <div class="input-text">
-          <label for="Email">Email</label>
+          <label for="e-mail">Email</label>
           <input
             type="text"
             name="Email"
-            id="Email"
+            id="e-mail"
             formControlName="email"
             [ngClass]="{
               error: checkErrorCamp(loginForm, 'email')
@@ -43,16 +43,16 @@
         </div>
       </div>
 
-      <div id="text-error" *ngIf="!!hasErrorLogin" class="error-form">
+      <div id="text-error1" *ngIf="!!hasErrorLogin" class="error-form">
         <span class="material-icons">error_outline</span>
         <span>{{ hasErrorLogin }}</span>
       </div>
 
       <div class="btns-login">
         <button type="submit" class="btn btn-logar">Login</button>
-        <button class="btn btn-abrir-cadastro" (click)="abrirCadastro()">
-          Cadastrar
-        </button>
+        <p class="opcao-login">
+          Novo por aqui? <span class="habilitar-cadastro" (click)="abrirCadastro()">Cadastrar</span>
+        </p>
       </div>
     </form>
 
@@ -161,10 +161,10 @@
       </div>
 
       <div class="botoes-cadastro">
-        <button class="btn btn-voltar" (click)="fecharCadastro()">
-          <em class="material-icons">arrow_back_ios</em>
-        </button>
         <button type="submit" class="btn btn-cadastrar">Confirmar</button>
+        <p class="opcao-login">
+          Já tem um conta? <span class="habilitar-cadastro" (click)="fecharCadastro()">Entrar</span>
+        </p>
       </div>
     </form>
   </div>

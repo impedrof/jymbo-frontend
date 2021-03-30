@@ -154,9 +154,31 @@
 /* BTN LOGIN/CADASTRO */
 .btns-login,
 .botoes-cadastro {
-  margin-top: 35px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btns-login button {
+  width: 100%;
+}
+
+.opcao-login {
+  font-size: 14px;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.habilitar-cadastro {
+  color: #380cec;
+  font-weight: 400;
+}
+
+.btns-login button,
+.botoes-cadastro button {
+  min-height: 40px;
 }
 
 .btn-logar,
@@ -170,6 +192,12 @@
   background-color: #552dfb;
 }
 
+.btn-cadastrar {
+  min-width: 100px;
+}
+
+
+/* BTN VOLTAR */
 .btn-voltar {
   color: #333333;
   border-radius: 2px;
@@ -177,23 +205,13 @@
   background-color: #f4f4f4;
 }
 
-.btn-voltar:active {
-  background-color: #fbfbfb;
-}
-
-.btn-abrir-cadastro {
-  color: #ffffff;
-  background-color: #38b9ff;
-}
-
-.btn-abrir-cadastro:active {
-  background-color: #6acbff;
-}
-
-/* BTN VOLTAR */
 .btn-voltar em {
   padding-left: 5px;
   font-size: 16px;
+}
+
+.btn-voltar:active {
+  background-color: #fbfbfb;
 }
 
 @media screen and (min-width: 499px) {
