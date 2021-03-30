@@ -1,0 +1,19 @@
+<div class="modal-overlay" *ngIf="isOpen">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h3 class="modal-title">{{ modalConfig.modalTitle }}</h3>
+      <div class="close-button">
+        <span class="material-icons" (click)="close()">close</span>
+      </div>
+    </div>
+
+
+    <div [ngTemplateOutlet]="bodyModal"></div>
+
+  </div>
+
+</div>
+
+

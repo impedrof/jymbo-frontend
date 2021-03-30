@@ -3,9 +3,11 @@ import { Movimentacao } from '../../../models/movimentacoes';
 import { PrincipalService } from '../../../services/principal.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
+import {ModalJymboComponent} from '../../shared/modal-jymbo/modal-jymbo.component';
+import {ModalConfig} from '../../shared/modal-jymbo/modal-config';
 
 @Component({
   selector: 'app-principal',
@@ -13,6 +15,15 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./principal.component.css'],
 })
 export class PrincipalComponent implements OnInit {
+  @ViewChild('jyModal') private modalJymbo: ModalJymboComponent;
+  @ViewChild('bodyModal') private bodyModal: TemplateRef<any>;
+
+  modalConfig: ModalConfig = {
+    modalTitle: 'Teste',
+    cancelButtonLabel: 'Cancelar',
+    confirmButtonLabel: 'Cadastrar'
+  };
+
   user: User;
   movimentacaoForm: FormGroup;
   listaDeMovimentacoes: Movimentacao[] = [];
@@ -27,6 +38,8 @@ export class PrincipalComponent implements OnInit {
   dataMovimentacao = '';
   dataAtual: Date;
   mesAtual = 'Atual';
+
+  isMobile: boolean;
 
   constructor(
     private authService: AuthService,
@@ -43,22 +56,31 @@ export class PrincipalComponent implements OnInit {
       this.buscarMovPorMes(res.id, this.dataAtual);
       this.buscarTodasMov(res.id);
     });
-
     this.movimentacaoForm = this.formBuilder.group({
       tipo: [1, Validators.required],
       descricao: [null, Validators.required],
       valor: [null, Validators.required],
       data: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), Validators.required]
     });
-
+    this.isMobile = window.outerWidth <= 1000;
     window.onresize = () => {
       if (window.screen.width <= 1000) {
-        this.logicaHideShow('hide');
+        this.isMobile = true;
       } else {
-        this.logicaHideShow('show');
+        this.isMobile = false;
+        this.modalJymbo.close();
       }
     };
 
+  }
+
+  abrirModal(): void {
+    this.modalJymbo.open();
+    this.resetarFormulario();
+  }
+
+  fecharModal(): void {
+    this.resetarFormulario();
   }
 
   mostrarOcutarDetalhes(): void {
@@ -147,26 +169,6 @@ export class PrincipalComponent implements OnInit {
     this.router.navigateByUrl('/login');
   }
 
-  logicaHideShow(tipo: string): void {
-    const divEsquerdo = document.querySelector('.container-cadastro');
-    if (tipo === 'hide') {
-      divEsquerdo.classList.remove('show');
-      divEsquerdo.classList.add('hide');
-    } else if (tipo === 'show') {
-      divEsquerdo.classList.add('show');
-      divEsquerdo.classList.remove('hide');
-    }
-  }
-
-  showHideAddMov(): void {
-    const divEsquerdo = document.querySelector('.container-cadastro');
-    if (divEsquerdo.classList.contains('show')) {
-      this.logicaHideShow('hide');
-    } else {
-      this.logicaHideShow('show');
-    }
-  }
-
   escolherTipoMovimentacao(tipo: number): void {
     const opcao1 = document.querySelector('#opcao1');
     const opcao2 = document.querySelector('#opcao2');
@@ -217,15 +219,20 @@ export class PrincipalComponent implements OnInit {
         this.buscarTodasMov(this.user.id);
         this.buscarMovPorMes(this.user.id, this.dataAtual).then(res => {
           this.alterarMes(null, novaMov);
-          this.movimentacaoForm = this.formBuilder.group({
-            tipo: [1, Validators.required],
-            descricao: [null, Validators.required],
-            valor: [null, Validators.required],
-            data: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), Validators.required]
-          });
+          this.resetarFormulario();
           this.escolherTipoMovimentacao(1);
+          this.modalJymbo.close();
         });
       }
+    });
+  }
+
+  resetarFormulario(): void {
+    this.movimentacaoForm = this.formBuilder.group({
+      tipo: [1, Validators.required],
+      descricao: [null, Validators.required],
+      valor: [null, Validators.required],
+      data: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), Validators.required]
     });
   }
 

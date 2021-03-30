@@ -256,6 +256,11 @@
 }
 
 /* BODY */
+.formulario-movimentacao {
+  display: grid;
+  gap: 10px;
+}
+
 .container-cadastro,
 .container-movimentacoes,
 .receitas-despesas {
