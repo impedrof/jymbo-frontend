@@ -1,11 +1,4 @@
 export class Movimentacao {
-  readonly id: number;
-  readonly tipo: number;
-  readonly descricao: string;
-  readonly valor: number;
-  readonly data: Date;
-  readonly usuarioId: number;
-  readonly dataFormatada: string;
 
   constructor(
     id?: number,
@@ -14,6 +7,7 @@ export class Movimentacao {
     valor?: number,
     data?: Date,
     usuarioId?: number,
+    status?: number
   ) {
     this.id = id;
     this.tipo = tipo;
@@ -22,31 +16,40 @@ export class Movimentacao {
     this.data = data;
     this.dataFormatada = this.formatarData(data);
     this.usuarioId = usuarioId;
+    this.status = status;
+  }
+  readonly id: number;
+  readonly tipo: number;
+  readonly descricao: string;
+  readonly valor: number;
+  readonly data: Date;
+  readonly usuarioId: number;
+  readonly dataFormatada: string;
+  readonly status: number;
+
+  static instanciarArrayMovimentacao(array: Movimentacao[]): Movimentacao[] {
+    const novoArray: Movimentacao[] = [];
+    array.forEach(item => {
+      novoArray.push(new Movimentacao(item.id, item.tipo, item.descricao, item.valor, item.data, item.usuarioId, item.status));
+    });
+    return this.ordernarArrayMovimentacaoPorData(novoArray);
+  }
+
+  static ordernarArrayMovimentacaoPorData(array: Movimentacao[]): any {
+    return array.sort((a, b) => {
+      if (a.data > b.data) { return 1; }
+      if (a.data < b. data) { return -1; }
+    });
   }
 
   formatarData(data: Date): string {
     const dataConvertida = new Date(String(data).replace('T00:00:00.000Z', ''));
     let dd = String(dataConvertida.getUTCDate());
-    let mm = dataConvertida.toLocaleString('default', { month: 'long' });
+    const mm = dataConvertida.toLocaleString('default', { month: 'long' });
     const yyyy = dataConvertida.getFullYear();
     if (dd.length < 2) {
       dd = `0${dd}`;
     }
     return `${dd} de ${mm} de ${yyyy}`;
-  }
-
-  static instanciarArrayMovimentacao(array: Movimentacao[]): Movimentacao[] {
-    const novoArray: Movimentacao[] = [];
-    array.forEach(item => {
-      novoArray.push(new Movimentacao(item.id, item.tipo, item.descricao, item.valor, item.data, item.usuarioId));
-    });
-    return this.ordernarArrayMovimentacaoPorData(novoArray);
-  }
-
-  static ordernarArrayMovimentacaoPorData(array: Movimentacao[]) {
-    return array.sort((a, b) => {
-      if (a.data > b.data) return 1;
-      if (a.data < b. data) return -1;
-    });
   }
 }

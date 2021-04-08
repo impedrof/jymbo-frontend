@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import {ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { formatDate } from '@angular/common';
+import {DatePipe, formatDate} from '@angular/common';
 import {ModalJymboComponent} from '../../shared/modal-jymbo/modal-jymbo.component';
 import {ModalConfig} from '../../shared/modal-jymbo/modal-config';
 
@@ -60,7 +60,7 @@ export class PrincipalComponent implements OnInit {
       tipo: [1, Validators.required],
       descricao: [null, Validators.required],
       valor: [null, Validators.required],
-      data: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), Validators.required]
+      data: [this.mascaraDataAtual(), Validators.required]
     });
     this.isMobile = window.outerWidth <= 1000;
     window.onresize = () => {
@@ -71,7 +71,19 @@ export class PrincipalComponent implements OnInit {
         this.modalJymbo.close();
       }
     };
+  }
 
+  mascaraDataAtual(): string {
+    const yyyy = this.dataAtual.getFullYear();
+    const MM = this.dataAtual.getMonth() + 1;
+    const dd = this.dataAtual.getDate();
+    const hh = this.dataAtual.getHours();
+    const mm = this.dataAtual.getMinutes();
+    const ss = this.dataAtual.getSeconds();
+
+    const stringData = `${yyyy}/${MM}/${dd} ${hh}:${mm}:${ss} GMT`;
+    const novaData = new Date(stringData);
+    return novaData.toISOString().substring(0, 16);
   }
 
   abrirModal(): void {
@@ -106,8 +118,10 @@ export class PrincipalComponent implements OnInit {
     await this.principal.buscarTodasMovimentacoes(idUsuario).subscribe((mov: Movimentacao[]) => {
       const novaLista = Movimentacao.instanciarArrayMovimentacao(mov);
       this.resetarValorMovimentacoesTotais();
-      this.totalReceita = novaLista.map(movi => movi?.tipo === 1 ? movi.valor : 0).reduce((t, vA) => t + vA, 0);
-      this.totalDespesa = novaLista.map(movim => movim?.tipo === 2 ? movim.valor : 0).reduce((t, vA) => t + vA, 0);
+      this.totalReceita = novaLista.map((movi: Movimentacao) => movi?.tipo === 1 && movi?.status === 1 ? movi.valor : 0)
+        .reduce((t, vA) => t + vA, 0);
+      this.totalDespesa = novaLista.map((movim: Movimentacao) => movim?.tipo === 2 && movim?.status === 1 ? movim.valor : 0)
+        .reduce((t, vA) => t + vA, 0);
       this.totalValor = this.totalReceita - this.totalDespesa;
     });
   }
@@ -232,7 +246,7 @@ export class PrincipalComponent implements OnInit {
       tipo: [1, Validators.required],
       descricao: [null, Validators.required],
       valor: [null, Validators.required],
-      data: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), Validators.required]
+      data: [this.mascaraDataAtual(), Validators.required]
     });
   }
 
@@ -247,5 +261,10 @@ export class PrincipalComponent implements OnInit {
     const formControl = formGroup.controls[name];
 
     return formControl.invalid && formControl.dirty;
+  }
+
+  buscarMovimentacoes(): void {
+    this.buscarTodasMov(this.user.id);
+    this.buscarMovPorMes(this.user.id, this.dataAtual);
   }
 }

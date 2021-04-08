@@ -1,5 +1,6 @@
 import { Movimentacao } from './../../../../models/movimentacoes';
 import { Component, Input, OnInit, ChangeDetectionStrategy, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {PrincipalService} from '../../../../services/principal.service';
 
 @Component({
   selector: 'app-card-container',
@@ -9,12 +10,14 @@ import { Component, Input, OnInit, ChangeDetectionStrategy, Output, EventEmitter
 })
 export class CardContainerComponent implements OnInit, OnChanges {
 
-  @Input() listaDeMovimentacoes;
+  @Input() listaDeMovimentacoes: Movimentacao[];
   @Input() dataMovimentacao;
+
+  @Output() statusEvento = new EventEmitter<any>();
 
   dataMovInterna = '';
 
-  constructor() { }
+  constructor(private api: PrincipalService) { }
   ngOnChanges(): void {
     this.dataMovInterna = this.dataMovimentacao;
   }
@@ -26,6 +29,18 @@ export class CardContainerComponent implements OnInit, OnChanges {
     const resp = this.dataMovInterna !== data.dataFormatada;
     this.dataMovInterna = data.dataFormatada;
     return resp;
+  }
+
+  async setarStatus(status: number, mov: Movimentacao, index: number): Promise<void> {
+    const span = document.querySelector<HTMLElement>('#span' + index);
+    const statusSend = status === 1.0 ? 0.0 : 1.0;
+    const movRes = await this.api.alterarStatusMovimentacao(statusSend, mov);
+    this.statusEvento.emit();
+    if (span.classList.contains('ativo')) {
+      span.classList.remove('ativo');
+    } else {
+      span.classList.add('ativo');
+    }
   }
 
 }

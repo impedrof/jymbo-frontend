@@ -141,6 +141,7 @@
             class="area-movimentacoes"
             [listaDeMovimentacoes]="listaDeMovimentacoes"
             [dataMovimentacao]="dataMovimentacao"
+            (statusEvento)="buscarMovimentacoes()"
           ></app-card-container>
         </div>
       </div>
@@ -228,20 +229,18 @@
     <div class="campo-input data">
       <label for="data">Data</label>
       <input
-        type="date"
+        type="datetime-local"
         name="data"
         id="data"
         formControlName="data"
-        [ngClass]="{
-                'error-campo': checkErrorCamp(movimentacaoForm, 'data')
-              }"
+        [ngClass]="{'error-campo': checkErrorCamp(movimentacaoForm, 'data')}"
       />
       <span
         class="msg-erro"
         *ngIf="checkErrorCamp(movimentacaoForm, 'data')"
       >
-              {{ getErrorMessage(movimentacaoForm, "data") }}
-            </span>
+        {{ getErrorMessage(movimentacaoForm, "data") }}
+      </span>
     </div>
 
     <div class="area-botao-confirmar">

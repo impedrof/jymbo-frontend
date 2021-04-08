@@ -14,6 +14,16 @@
       <div class="tag vermelho" *ngIf="mov.tipo == 2">
         <span>Despesa</span>
       </div>
+      <div class="opcoes-card">
+        <span
+          [id]="'span' +i"
+          class="material-icons"
+          [ngClass]="{'ativo': mov.status === 1}"
+          (click)="setarStatus(mov.status, mov, i)"
+        >
+          thumb_up_off_alt
+        </span>
+      </div>
     </div>
   </div>
 </div>

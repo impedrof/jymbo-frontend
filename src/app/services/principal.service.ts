@@ -39,4 +39,8 @@ export class PrincipalService {
       tap((u) => {})
     );
   }
+
+  async alterarStatusMovimentacao(novoStatus: number, movimentacao: Movimentacao): Promise<any> {
+    return this.http.post(`${this.url}/alterarStatus`, {novoStatus, movimentacao}).toPromise();
+  }
 }
