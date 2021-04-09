@@ -1,15 +1,12 @@
 import {
   FormGroup,
-  FormControl,
   Validators,
   FormBuilder,
-  AbstractControl,
 } from '@angular/forms';
-import { User } from './../../models/user';
-import { AuthService } from './../../services/auth.service';
+import { User } from '../../models/user';
+import { AuthService } from '../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import CPF from 'cpf-check';
 
 @Component({
   selector: 'app-login',
@@ -44,8 +41,7 @@ export class LoginComponent implements OnInit {
           Validators.compose([Validators.required, Validators.email]),
         ],
         senha: [null, Validators.required],
-        conSenha: [null, Validators.required],
-        cpf: [null, Validators.compose([Validators.required, this.checkCPF])],
+        conSenha: [null, Validators.required]
       },
       { validators: this.checkPasswords, updateOn: 'blur' }
     );
@@ -74,7 +70,6 @@ export class LoginComponent implements OnInit {
     const email = this.cadastroForm.value.email;
     const senha = this.cadastroForm.value.senha;
     const conSenha = this.cadastroForm.value.conSenha;
-    const cpf = this.cadastroForm.value.cpf;
 
     // TODO Refatorar essa verificação para evitar repetição de código
     if (!nome) {
@@ -93,16 +88,12 @@ export class LoginComponent implements OnInit {
       this.cadastroForm.controls.conSenha.setErrors({ required: true });
       this.cadastroForm.controls.conSenha.markAsDirty();
     }
-    if (!cpf) {
-      this.cadastroForm.controls.cpf.setErrors({ required: true });
-      this.cadastroForm.controls.cpf.markAsDirty();
-    }
     if (!this.cadastroForm.valid) {
       return;
     }
 
     this.authService
-      .cadastrarUsuario(new User(null, nome, email, senha, cpf))
+      .cadastrarUsuario(new User(null, nome, email, senha))
       .subscribe(
         (result) => {
           if (result) {
@@ -124,16 +115,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  checkCPF(control: FormControl): any {
-    const cpf = control.value;
-    return CPF.validate(cpf) ? null : { cpfInvalid: true };
-  }
-
   logarUsuario(): void {
     const email = this.loginForm.value.email;
     const senha = this.loginForm.value.senha;
     if (!this.loginForm.valid) { return; }
-    this.authService.logar(new User(null, null, email, senha, null)).subscribe(
+    this.authService.logar(new User(null, null, email, senha)).subscribe(
       (res) => {
         this.route.navigateByUrl('/principal');
       },
