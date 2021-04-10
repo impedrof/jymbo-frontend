@@ -214,6 +214,8 @@
         name="valor"
         id="valor"
         formControlName="valor"
+        currencyMask
+        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
         [ngClass]="{
                 'error-campo': checkErrorCamp(movimentacaoForm, 'valor')
               }"
@@ -230,6 +232,7 @@
       <label for="data">Data</label>
       <input
         type="datetime-local"
+        step="1"
         name="data"
         id="data"
         formControlName="data"

@@ -11,12 +11,12 @@ import { AppRoutingModule } from './routes/app.routing';
 import { LoginComponent } from '../views/login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgxMaskModule } from 'ngx-mask';
 
 import { AppComponent } from '../views/app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {ModalJymboComponent} from '../views/shared/modal-jymbo/modal-jymbo.component';
+import {NgxCurrencyModule} from 'ngx-currency';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,7 @@ import {ModalJymboComponent} from '../views/shared/modal-jymbo/modal-jymbo.compo
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxMaskModule.forRoot()
+    NgxCurrencyModule
   ],
   providers: [
     UserAuthenticated,

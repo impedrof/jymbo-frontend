@@ -74,16 +74,17 @@ export class PrincipalComponent implements OnInit {
   }
 
   mascaraDataAtual(): string {
-    const yyyy = this.dataAtual.getFullYear();
-    const MM = this.dataAtual.getMonth() + 1;
-    const dd = this.dataAtual.getDate();
-    const hh = this.dataAtual.getHours();
-    const mm = this.dataAtual.getMinutes();
-    const ss = this.dataAtual.getSeconds();
+    const atualData = new Date();
+    const yyyy = atualData.getFullYear();
+    const MM = atualData.getMonth() + 1;
+    const dd = atualData.getDate();
+    const hh = atualData.getHours();
+    const mm = atualData.getMinutes();
+    const ss = atualData.getSeconds();
 
     const stringData = `${yyyy}/${MM}/${dd} ${hh}:${mm}:${ss} GMT`;
     const novaData = new Date(stringData);
-    return novaData.toISOString().substring(0, 16);
+    return novaData.toISOString().substring(0, 19);
   }
 
   abrirModal(): void {
