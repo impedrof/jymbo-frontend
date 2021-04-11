@@ -23,6 +23,15 @@
         >
           thumb_up_off_alt
         </span>
+        <button class="dropdown dropdown-button">
+          <span class="material-icons icone-mais" (click)="verificarPosicaoDropdownButton(i)">
+            more_vert
+          </span>
+          <span class="dropdown-opcoes" [id]="'lista-opcoes' + i">
+            <button class="opcoes-button">Editar</button>
+            <button class="opcoes-button">Excluir</button>
+          </span>
+        </button>
       </div>
     </div>
   </div>

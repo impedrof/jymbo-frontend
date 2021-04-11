@@ -25,6 +25,15 @@ export class CardContainerComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
 
+  verificarPosicaoDropdownButton(index: number): void {
+    const opcoes = document.querySelector<HTMLElement>('#lista-opcoes' + index);
+    opcoes.classList.remove('limite-altura');
+    const rect = opcoes.getBoundingClientRect();
+    if (rect.bottom >= (window.innerHeight - 100)) {
+      opcoes.classList.add('limite-altura');
+    }
+  }
+
   verificarData(data: Movimentacao): boolean {
     const resp = this.dataMovInterna !== data.dataFormatada;
     this.dataMovInterna = data.dataFormatada;
