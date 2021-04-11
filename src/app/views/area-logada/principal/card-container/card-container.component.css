@@ -1,3 +1,15 @@
+.movimentacao-container .data {
+  font-size: 15px;
+  margin: 16px 0;
+  font-weight: 300;
+  color: #424242;
+}
+
+.card-container {
+  display: grid;
+  gap: 10px;
+}
+
 .card-mov {
   background: #ffffff;
   padding: 15px;
@@ -23,13 +35,6 @@
 .card-mov .superior .desc {
   display: flex;
   flex-direction: column;
-}
-
-.card-container .data {
-  font-size: 15px;
-  margin: 16px 0;
-  font-weight: 300;
-  color: #424242;
 }
 
 .card-mov .inferior {

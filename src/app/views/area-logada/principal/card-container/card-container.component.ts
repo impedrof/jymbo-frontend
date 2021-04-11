@@ -2,6 +2,11 @@ import { Movimentacao } from './../../../../models/movimentacoes';
 import { Component, Input, OnInit, ChangeDetectionStrategy, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import {PrincipalService} from '../../../../services/principal.service';
 
+export interface ListaPorData {
+  data: string;
+  movimentacoes: Movimentacao[];
+}
+
 @Component({
   selector: 'app-card-container',
   templateUrl: './card-container.component.html',
@@ -11,18 +16,36 @@ import {PrincipalService} from '../../../../services/principal.service';
 export class CardContainerComponent implements OnInit, OnChanges {
 
   @Input() listaDeMovimentacoes: Movimentacao[];
-  @Input() dataMovimentacao;
 
   @Output() statusEvento = new EventEmitter<any>();
 
-  dataMovInterna = '';
+  listaPorData: ListaPorData[] = [];
 
   constructor(private api: PrincipalService) { }
   ngOnChanges(): void {
-    this.dataMovInterna = this.dataMovimentacao;
+    this.separarPorData();
   }
 
   ngOnInit(): void {
+    this.separarPorData();
+  }
+
+  separarPorData(): void {
+    const grupos = {};
+    this.listaDeMovimentacoes.forEach(mov => {
+      if (!grupos[mov.dataFormatada]) {
+        grupos[mov.dataFormatada] = [];
+      }
+      grupos[mov.dataFormatada].push(mov);
+    });
+
+    this.listaPorData = Object.keys(grupos).map(datas => {
+      const listaPorData: ListaPorData = {
+        data: datas,
+        movimentacoes: grupos[datas]
+      };
+      return listaPorData;
+    });
   }
 
   verificarPosicaoDropdownButton(index: number): void {
@@ -34,12 +57,6 @@ export class CardContainerComponent implements OnInit, OnChanges {
     }
   }
 
-  verificarData(data: Movimentacao): boolean {
-    const resp = this.dataMovInterna !== data.dataFormatada;
-    this.dataMovInterna = data.dataFormatada;
-    return resp;
-  }
-
   async setarStatus(status: number, mov: Movimentacao, index: number): Promise<void> {
     const span = document.querySelector<HTMLElement>('#span' + index);
     const statusSend = status === 1.0 ? 0.0 : 1.0;
@@ -49,6 +66,13 @@ export class CardContainerComponent implements OnInit, OnChanges {
       span.classList.remove('ativo');
     } else {
       span.classList.add('ativo');
+    }
+  }
+
+  async deletarMovimentacao(movimentacao: Movimentacao): Promise<void> {
+    const resposta = await this.api.deletarMovimentacao(movimentacao);
+    if (resposta) {
+      this.statusEvento.emit();
     }
   }
 

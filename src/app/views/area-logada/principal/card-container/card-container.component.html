@@ -1,20 +1,21 @@
-<div class="card-container" *ngFor="let mov of listaDeMovimentacoes; let i = index">
-  <div class="data" *ngIf="verificarData(mov)"> {{ mov.dataFormatada }} </div>
-  <div class="card-mov">
-    <div class="superior">
-      <div class="desc">
-        <span class="txt-desc">{{ mov.descricao }}</span>
+<div class="movimentacao-container" *ngFor="let lista of listaPorData">
+  <div class="data"> {{ lista.data }} </div>
+  <div class="card-container">
+    <div class="card-mov" *ngFor="let mov of lista.movimentacoes; let i = index">
+      <div class="superior">
+        <div class="desc">
+          <span class="txt-desc">{{ mov.descricao }}</span>
+        </div>
+        <div class="valor">{{ mov.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</div>
       </div>
-      <div class="valor">{{ mov.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</div>
-    </div>
-    <div class="inferior">
-      <div class="tag verde" *ngIf="mov.tipo == 1">
-        <span>Receita</span>
-      </div>
-      <div class="tag vermelho" *ngIf="mov.tipo == 2">
-        <span>Despesa</span>
-      </div>
-      <div class="opcoes-card">
+      <div class="inferior">
+        <div class="tag verde" *ngIf="mov.tipo == 1">
+          <span>Receita</span>
+        </div>
+        <div class="tag vermelho" *ngIf="mov.tipo == 2">
+          <span>Despesa</span>
+        </div>
+        <div class="opcoes-card">
         <span
           [id]="'span' +i"
           class="material-icons"
@@ -23,16 +24,18 @@
         >
           thumb_up_off_alt
         </span>
-        <button class="dropdown dropdown-button">
+          <button class="dropdown dropdown-button">
           <span class="material-icons icone-mais" (click)="verificarPosicaoDropdownButton(i)">
             more_vert
           </span>
-          <span class="dropdown-opcoes" [id]="'lista-opcoes' + i">
+            <span class="dropdown-opcoes" [id]="'lista-opcoes' + i">
             <button class="opcoes-button">Editar</button>
-            <button class="opcoes-button">Excluir</button>
+            <button class="opcoes-button" (click)="deletarMovimentacao(mov)">Excluir</button>
           </span>
-        </button>
+          </button>
+        </div>
       </div>
     </div>
   </div>
+
 </div>

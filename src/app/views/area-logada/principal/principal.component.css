@@ -367,8 +367,6 @@
 
 /* CONTAINER MOVIMENTAÇÕES */
 .area-movimentacoes {
-  display: grid;
-  gap: 10px;
 }
 
 /* CONFIGURACOES JS */
