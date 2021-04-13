@@ -48,17 +48,18 @@ export class CardContainerComponent implements OnInit, OnChanges {
     });
   }
 
-  verificarPosicaoDropdownButton(index: number): void {
-    const opcoes = document.querySelector<HTMLElement>('#lista-opcoes' + index);
+  verificarPosicaoDropdownButton(index1: number, index: number): void {
+    const opcoes = document.querySelector<HTMLElement>('#lista-opcoes' + index1 + index);
     opcoes.classList.remove('limite-altura');
+    console.log(opcoes);
     const rect = opcoes.getBoundingClientRect();
     if (rect.bottom >= (window.innerHeight - 100)) {
       opcoes.classList.add('limite-altura');
     }
   }
 
-  async setarStatus(status: number, mov: Movimentacao, index: number): Promise<void> {
-    const span = document.querySelector<HTMLElement>('#span' + index);
+  async setarStatus(status: number, mov: Movimentacao, index1: number, index: number): Promise<void> {
+    const span = document.querySelector<HTMLElement>('#span' + index1 + index);
     const statusSend = status === 1.0 ? 0.0 : 1.0;
     const movRes = await this.api.alterarStatusMovimentacao(statusSend, mov);
     this.statusEvento.emit();

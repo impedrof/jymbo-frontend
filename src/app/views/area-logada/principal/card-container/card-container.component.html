@@ -1,7 +1,7 @@
-<div class="movimentacao-container" *ngFor="let lista of listaPorData">
+<div class="movimentacao-container" *ngFor="let lista of listaPorData; let i = index">
   <div class="data"> {{ lista.data }} </div>
   <div class="card-container">
-    <div class="card-mov" *ngFor="let mov of lista.movimentacoes; let i = index">
+    <div class="card-mov" *ngFor="let mov of lista.movimentacoes; let in = index">
       <div class="superior">
         <div class="desc">
           <span class="txt-desc">{{ mov.descricao }}</span>
@@ -17,22 +17,22 @@
         </div>
         <div class="opcoes-card">
         <span
-          [id]="'span' +i"
+          [id]="'span' + i + in"
           class="material-icons"
           [ngClass]="{'ativo': mov.status === 1}"
-          (click)="setarStatus(mov.status, mov, i)"
+          (click)="setarStatus(mov.status, mov, i, in)"
         >
           thumb_up_off_alt
         </span>
-          <button class="dropdown dropdown-button">
-          <span class="material-icons icone-mais" (click)="verificarPosicaoDropdownButton(i)">
+        <button class="dropdown dropdown-button">
+          <span class="material-icons icone-mais" (click)="verificarPosicaoDropdownButton(i, in)">
             more_vert
           </span>
-            <span class="dropdown-opcoes" [id]="'lista-opcoes' + i">
+          <span class="dropdown-opcoes" [id]="'lista-opcoes' + i + in">
             <button class="opcoes-button">Editar</button>
             <button class="opcoes-button" (click)="deletarMovimentacao(mov)">Excluir</button>
           </span>
-          </button>
+        </button>
         </div>
       </div>
     </div>
