@@ -73,8 +73,8 @@ export class PrincipalComponent implements OnInit {
     };
   }
 
-  mascaraDataAtual(): string {
-    const atualData = new Date();
+  mascaraDataAtual(data?: any): string {
+    const atualData = data ? new Date(data) : new Date();
     const yyyy = atualData.getFullYear();
     const MM = atualData.getMonth() + 1;
     const dd = atualData.getDate();
@@ -87,9 +87,19 @@ export class PrincipalComponent implements OnInit {
     return novaData.toISOString().substring(0, 19);
   }
 
-  abrirModal(): void {
-    this.modalJymbo.open();
+  abrirModal(tipo: string, mov?: Movimentacao): void {
     this.resetarFormulario();
+    if (tipo === 'edicao' && mov) {
+      this.movimentacaoForm = this.formBuilder.group({
+        tipo: [mov.tipo, Validators.required],
+        descricao: [mov.descricao, Validators.required],
+        valor: [mov.valor, Validators.required],
+        data: [this.mascaraDataAtual(mov.data), Validators.required]
+      });
+    }
+    this.modalJymbo.open();
+
+
   }
 
   fecharModal(): void {

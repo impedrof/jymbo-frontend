@@ -29,7 +29,7 @@
             more_vert
           </span>
           <span class="dropdown-opcoes" [id]="'lista-opcoes' + i + in">
-            <button class="opcoes-button">Editar</button>
+            <button class="opcoes-button" (click)="abrirEdicao(mov)">Editar</button>
             <button class="opcoes-button" (click)="deletarMovimentacao(mov)">Excluir</button>
           </span>
         </button>

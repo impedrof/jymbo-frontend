@@ -1,5 +1,5 @@
-import { Movimentacao } from './../../../../models/movimentacoes';
-import { Component, Input, OnInit, ChangeDetectionStrategy, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Movimentacao } from '../../../../models/movimentacoes';
+import { Component, Input, OnInit, ChangeDetectionStrategy, Output, EventEmitter, OnChanges } from '@angular/core';
 import {PrincipalService} from '../../../../services/principal.service';
 
 export interface ListaPorData {
@@ -17,11 +17,14 @@ export class CardContainerComponent implements OnInit, OnChanges {
 
   @Input() listaDeMovimentacoes: Movimentacao[];
 
+  @Output() eventoEdicao = new EventEmitter<any>();
+
   @Output() statusEvento = new EventEmitter<any>();
 
   listaPorData: ListaPorData[] = [];
 
   constructor(private api: PrincipalService) { }
+
   ngOnChanges(): void {
     this.separarPorData();
   }
@@ -51,7 +54,6 @@ export class CardContainerComponent implements OnInit, OnChanges {
   verificarPosicaoDropdownButton(index1: number, index: number): void {
     const opcoes = document.querySelector<HTMLElement>('#lista-opcoes' + index1 + index);
     opcoes.classList.remove('limite-altura');
-    console.log(opcoes);
     const rect = opcoes.getBoundingClientRect();
     if (rect.bottom >= (window.innerHeight - 100)) {
       opcoes.classList.add('limite-altura');
@@ -74,6 +76,14 @@ export class CardContainerComponent implements OnInit, OnChanges {
     const resposta = await this.api.deletarMovimentacao(movimentacao);
     if (resposta) {
       this.statusEvento.emit();
+    }
+  }
+
+  async abrirEdicao(movimentacao: Movimentacao): Promise<void> {
+    const mov = await this.api.buscarPorId(movimentacao);
+    if (mov) {
+      const movSelecionada = new Movimentacao(mov.id, mov.tipo, mov.descricao, mov.valor, mov.data, mov.usuarioId, mov.status);
+      this.eventoEdicao.emit(movSelecionada);
     }
   }
 

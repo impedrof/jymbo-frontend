@@ -47,4 +47,8 @@ export class PrincipalService {
   async deletarMovimentacao(movimentacao: Movimentacao): Promise<any> {
     return this.http.delete(`${this.url}/${movimentacao.id}`).toPromise();
   }
+
+  async buscarPorId(movimentacao: Movimentacao): Promise<any> {
+    return this.http.get(`${this.url}/movimentacoes/${movimentacao.id}`).toPromise();
+  }
 }

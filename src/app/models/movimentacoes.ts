@@ -1,4 +1,12 @@
 export class Movimentacao {
+  readonly id: number;
+  readonly tipo: number;
+  readonly descricao: string;
+  readonly valor: number;
+  readonly data: Date;
+  readonly usuarioId: number;
+  readonly dataFormatada: string;
+  readonly status: number;
 
   constructor(
     id?: number,
@@ -18,14 +26,6 @@ export class Movimentacao {
     this.usuarioId = usuarioId;
     this.status = status;
   }
-  readonly id: number;
-  readonly tipo: number;
-  readonly descricao: string;
-  readonly valor: number;
-  readonly data: Date;
-  readonly usuarioId: number;
-  readonly dataFormatada: string;
-  readonly status: number;
 
   static instanciarArrayMovimentacao(array: Movimentacao[]): Movimentacao[] {
     const novoArray: Movimentacao[] = [];
