@@ -19,7 +19,7 @@ export class PrincipalComponent implements OnInit {
   @ViewChild('bodyModal') private bodyModal: TemplateRef<any>;
 
   modalConfig: ModalConfig = {
-    modalTitle: 'Teste',
+    modalTitle: 'Cadastrar Movimentação',
     cancelButtonLabel: 'Cancelar',
     confirmButtonLabel: 'Cadastrar'
   };
@@ -97,6 +97,9 @@ export class PrincipalComponent implements OnInit {
         valor: [mov.valor, Validators.required],
         data: [this.mascaraDataAtual(mov.data), Validators.required]
       });
+      this.modalConfig.modalTitle = 'Editar Movimentação';
+    } else {
+      this.modalConfig.modalTitle = 'Cadastrar Movimentação';
     }
     this.modalJymbo.open();
     this.modalIsOpen = this.modalJymbo.isOpen;
@@ -105,6 +108,11 @@ export class PrincipalComponent implements OnInit {
 
   fecharModal(): void {
     this.modalIsOpen = this.modalJymbo.isOpen;
+    this.modalConfig = {
+      modalTitle: 'Cadastrar Movimentação',
+      cancelButtonLabel: 'Cancelar',
+      confirmButtonLabel: 'Cadastrar'
+    };
     this.resetarFormulario();
   }
 
@@ -252,6 +260,10 @@ export class PrincipalComponent implements OnInit {
         });
       }
     });
+  }
+
+  editarMovimentacao(): any {
+    console.log('editando');
   }
 
   resetarFormulario(): void {

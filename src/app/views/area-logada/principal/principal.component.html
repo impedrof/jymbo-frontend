@@ -247,7 +247,14 @@
     </div>
 
     <div class="area-botao-confirmar">
-      <button class="btn primary" (click)="cadastrarMovimentacao()">
+      <button
+        class="btn primary"
+        (click)="
+          modalConfig.modalTitle === 'Cadastrar Movimentação'
+            ? cadastrarMovimentacao()
+            : editarMovimentacao()
+        "
+      >
         Salvar
       </button>
     </div>
