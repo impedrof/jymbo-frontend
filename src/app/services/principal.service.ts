@@ -51,4 +51,8 @@ export class PrincipalService {
   async buscarPorId(movimentacao: Movimentacao): Promise<any> {
     return this.http.get(`${this.url}/movimentacoes/${movimentacao.id}`).toPromise();
   }
+
+  async editarMovimentacao(movimentacao: Movimentacao): Promise<any> {
+    return this.http.post(`${this.url}/editar`, movimentacao).toPromise();
+  }
 }

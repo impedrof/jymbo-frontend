@@ -26,6 +26,7 @@ export class PrincipalComponent implements OnInit {
 
   user: User;
   movimentacaoForm: FormGroup;
+  movimentacaoEditar: Movimentacao;
   listaDeMovimentacoes: Movimentacao[] = [];
 
   totalValor = 0;
@@ -91,6 +92,7 @@ export class PrincipalComponent implements OnInit {
   abrirModal(tipo: string, mov?: Movimentacao): void {
     this.resetarFormulario();
     if (tipo === 'edicao' && mov) {
+      this.movimentacaoEditar = mov;
       this.movimentacaoForm = this.formBuilder.group({
         tipo: [mov.tipo, Validators.required],
         descricao: [mov.descricao, Validators.required],
@@ -107,6 +109,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   fecharModal(): void {
+    this.movimentacaoEditar = null;
     this.modalIsOpen = this.modalJymbo.isOpen;
     this.modalConfig = {
       modalTitle: 'Cadastrar Movimentação',
@@ -222,8 +225,7 @@ export class PrincipalComponent implements OnInit {
     }
   }
 
-  cadastrarMovimentacao(): any {
-    const tipo = this.movimentacaoForm.value.tipo;
+  validarFormBasico() {
     const descricao = this.movimentacaoForm.value.descricao;
     const valor = this.movimentacaoForm.value.valor;
     const data = this.movimentacaoForm.value.data;
@@ -242,6 +244,15 @@ export class PrincipalComponent implements OnInit {
       this.movimentacaoForm.controls.data.setErrors({ required: true });
       this.movimentacaoForm.controls.data.markAsDirty();
     }
+  }
+
+  cadastrarMovimentacao(): any {
+    const tipo = this.movimentacaoForm.value.tipo;
+    const descricao = this.movimentacaoForm.value.descricao;
+    const valor = this.movimentacaoForm.value.valor;
+    const data = this.movimentacaoForm.value.data;
+
+    this.validarFormBasico();
 
     if (!this.movimentacaoForm.valid) {
       return -1;
@@ -262,8 +273,29 @@ export class PrincipalComponent implements OnInit {
     });
   }
 
-  editarMovimentacao(): any {
-    console.log('editando');
+  async editarMovimentacao(): Promise<any> {
+    const tipo = this.movimentacaoForm.value.tipo;
+    const descricao = this.movimentacaoForm.value.descricao;
+    const valor = this.movimentacaoForm.value.valor;
+    const data = this.movimentacaoForm.value.data;
+
+    this.validarFormBasico();
+    if (!this.movimentacaoForm.valid) {
+      return -1;
+    }
+
+    const novaMov = new Movimentacao(this.movimentacaoEditar.id, tipo, descricao, valor, data, this.user.id);
+    const response = await this.principal.editarMovimentacao(novaMov);
+    if (response) {
+      this.getDataAtual();
+      this.buscarTodasMov(this.user.id);
+      this.buscarMovPorMes(this.user.id, this.dataAtual).then(res => {
+        this.alterarMes(null, novaMov);
+        this.resetarFormulario();
+        this.escolherTipoMovimentacao(1);
+        this.modalJymbo.close();
+      });
+    }
   }
 
   resetarFormulario(): void {
