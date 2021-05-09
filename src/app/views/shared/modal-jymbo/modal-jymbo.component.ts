@@ -15,7 +15,7 @@ export class ModalJymboComponent implements OnInit {
 
   @Output() eventClose = new EventEmitter<any>();
 
-  isOpen: boolean;
+  public isOpen: boolean;
 
   constructor() { }
 

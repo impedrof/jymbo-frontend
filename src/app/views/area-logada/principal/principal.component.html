@@ -31,37 +31,41 @@
     <div class="painel">
       <div class="painel-cards">
         <div class="card-painel receita-total">
-          <div class="card-painel-titulo saldo">
-            Saldo total
-          </div>
+          <div class="card-painel-titulo saldo">Saldo total</div>
           <div class="card-painel-body">
             <span class="cifrao">R$</span>
             <div class="valor-total">
-              {{ totalValor.toLocaleString("pt-br", { minimumFractionDigits: 2}) }}
+              {{
+                totalValor.toLocaleString("pt-br", { minimumFractionDigits: 2 })
+              }}
             </div>
           </div>
         </div>
 
         <div class="card-painel receita-total">
-          <div class="card-painel-titulo receita">
-            Receita total
-          </div>
+          <div class="card-painel-titulo receita">Receita total</div>
           <div class="card-painel-body">
             <span class="cifrao">R$</span>
             <div class="valor-total">
-              {{ totalReceita.toLocaleString("pt-br", { minimumFractionDigits: 2}) }}
+              {{
+                totalReceita.toLocaleString("pt-br", {
+                  minimumFractionDigits: 2
+                })
+              }}
             </div>
           </div>
         </div>
 
         <div class="card-painel receita-total">
-          <div class="card-painel-titulo despesa">
-            Despesa total
-          </div>
+          <div class="card-painel-titulo despesa">Despesa total</div>
           <div class="card-painel-body">
             <span class="cifrao">R$</span>
             <div class="valor-total">
-              {{ totalDespesa.toLocaleString("pt-br", { minimumFractionDigits: 2}) }}
+              {{
+                totalDespesa.toLocaleString("pt-br", {
+                  minimumFractionDigits: 2
+                })
+              }}
             </div>
           </div>
         </div>
@@ -71,7 +75,6 @@
         <span class="descricao">Mostrar detalhes</span>
         <span class="material-icons">keyboard_arrow_down</span>
       </div>
-
     </div>
 
     <div class="area-botoes">
@@ -84,11 +87,13 @@
     <div class="container-cadastro" *ngIf="!isMobile">
       <div class="esquerdo">
         <div class="secao">
-          <div class="titulo-secao">
-            <h3>Adicionar Movimentação</h3>
-          </div>
+          <div class="cadastro-fixo" [ngClass]="{ 'modal-open': modalIsOpen }">
+            <div class="titulo-secao">
+              <h3>Adicionar Movimentação</h3>
+            </div>
 
-          <div [ngTemplateOutlet]="camposCadastro"></div>
+            <div [ngTemplateOutlet]="camposCadastro"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -159,10 +164,7 @@
 
 <!-- TEMPLATE FOMULÁRIO CADASTRO -->
 <ng-template #camposCadastro>
-  <div
-    class="formulario-movimentacao"
-    [formGroup]="movimentacaoForm"
-  >
+  <div class="formulario-movimentacao" [formGroup]="movimentacaoForm">
     <div class="tipo-mov">
       <div class="componente-escolha">
         <div
@@ -182,12 +184,9 @@
           Despesa
         </div>
       </div>
-      <span
-        class="msg-erro"
-        *ngIf="checkErrorCamp(movimentacaoForm, 'tipo')"
-      >
-              {{ getErrorMessage(movimentacaoForm, "tipo") }}
-            </span>
+      <span class="msg-erro" *ngIf="checkErrorCamp(movimentacaoForm, 'tipo')">
+        {{ getErrorMessage(movimentacaoForm, "tipo") }}
+      </span>
     </div>
 
     <div class="campo-input descricao">
@@ -198,15 +197,15 @@
         id="descricao"
         formControlName="descricao"
         [ngClass]="{
-                'error-campo': checkErrorCamp(movimentacaoForm, 'descricao')
-              }"
+          'error-campo': checkErrorCamp(movimentacaoForm, 'descricao')
+        }"
       />
       <span
         class="msg-erro"
         *ngIf="checkErrorCamp(movimentacaoForm, 'descricao')"
       >
-              {{ getErrorMessage(movimentacaoForm, "descricao") }}
-            </span>
+        {{ getErrorMessage(movimentacaoForm, "descricao") }}
+      </span>
     </div>
 
     <div class="campo-input valor">
@@ -217,17 +216,19 @@
         id="valor"
         formControlName="valor"
         currencyMask
-        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+        [options]="{
+          prefix: 'R$ ',
+          thousands: '.',
+          decimal: ',',
+          align: 'left'
+        }"
         [ngClass]="{
-                'error-campo': checkErrorCamp(movimentacaoForm, 'valor')
-              }"
+          'error-campo': checkErrorCamp(movimentacaoForm, 'valor')
+        }"
       />
-      <span
-        class="msg-erro"
-        *ngIf="checkErrorCamp(movimentacaoForm, 'valor')"
-      >
-              {{ getErrorMessage(movimentacaoForm, "valor") }}
-            </span>
+      <span class="msg-erro" *ngIf="checkErrorCamp(movimentacaoForm, 'valor')">
+        {{ getErrorMessage(movimentacaoForm, "valor") }}
+      </span>
     </div>
 
     <div class="campo-input data">
@@ -238,19 +239,17 @@
         name="data"
         id="data"
         formControlName="data"
-        [ngClass]="{'error-campo': checkErrorCamp(movimentacaoForm, 'data')}"
+        [ngClass]="{ 'error-campo': checkErrorCamp(movimentacaoForm, 'data') }"
       />
-      <span
-        class="msg-erro"
-        *ngIf="checkErrorCamp(movimentacaoForm, 'data')"
-      >
+      <span class="msg-erro" *ngIf="checkErrorCamp(movimentacaoForm, 'data')">
         {{ getErrorMessage(movimentacaoForm, "data") }}
       </span>
     </div>
 
     <div class="area-botao-confirmar">
-      <button class="btn primary" (click)="cadastrarMovimentacao()">Salvar</button>
+      <button class="btn primary" (click)="cadastrarMovimentacao()">
+        Salvar
+      </button>
     </div>
   </div>
-
 </ng-template>

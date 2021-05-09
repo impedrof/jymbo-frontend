@@ -3,7 +3,7 @@ import { Movimentacao } from '../../../models/movimentacoes';
 import { PrincipalService } from '../../../services/principal.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
-import {ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {DatePipe, formatDate} from '@angular/common';
 import {ModalJymboComponent} from '../../shared/modal-jymbo/modal-jymbo.component';
@@ -15,7 +15,7 @@ import {ModalConfig} from '../../shared/modal-jymbo/modal-config';
   styleUrls: ['./principal.component.css'],
 })
 export class PrincipalComponent implements OnInit {
-  @ViewChild('jyModal') private modalJymbo: ModalJymboComponent;
+  @ViewChild('jyModal') public modalJymbo: ModalJymboComponent;
   @ViewChild('bodyModal') private bodyModal: TemplateRef<any>;
 
   modalConfig: ModalConfig = {
@@ -40,6 +40,7 @@ export class PrincipalComponent implements OnInit {
   mesAtual = 'Atual';
 
   isMobile: boolean;
+  modalIsOpen: boolean;
 
   constructor(
     private authService: AuthService,
@@ -98,11 +99,12 @@ export class PrincipalComponent implements OnInit {
       });
     }
     this.modalJymbo.open();
-
+    this.modalIsOpen = this.modalJymbo.isOpen;
 
   }
 
   fecharModal(): void {
+    this.modalIsOpen = this.modalJymbo.isOpen;
     this.resetarFormulario();
   }
 
