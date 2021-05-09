@@ -367,8 +367,6 @@
 
 /* CONTAINER MOVIMENTAÇÕES */
 .area-movimentacoes {
-  display: grid;
-  gap: 10px;
 }
 
 /* CONFIGURACOES JS */
@@ -540,6 +538,10 @@
     display: flex;
     grid-row: 3;
     grid-column: 1/2;
+  }
+
+  .modal-open {
+    opacity: 0;
   }
 
   .container-movimentacoes {

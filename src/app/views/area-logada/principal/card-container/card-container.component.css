@@ -1,3 +1,15 @@
+.movimentacao-container .data {
+  font-size: 15px;
+  margin: 16px 0;
+  font-weight: 300;
+  color: #424242;
+}
+
+.card-container {
+  display: grid;
+  gap: 10px;
+}
+
 .card-mov {
   background: #ffffff;
   padding: 15px;
@@ -8,10 +20,6 @@
   border: 1px solid lightgray;
   box-shadow: none;
 }
-
-/*.card-mov:hover {*/
-/*  border: 1px solid #0084ff;*/
-/*}*/
 
 .card-mov .superior {
   display: flex;
@@ -24,24 +32,14 @@
   transition: 0.3s;
 }
 
-/*.card-mov:hover .superior {*/
-/*  border-bottom: 1px solid #0084ff;*/
-/*}*/
-
 .card-mov .superior .desc {
   display: flex;
   flex-direction: column;
 }
 
-.card-container .data {
-  font-size: 15px;
-  margin: 16px 0;
-  font-weight: 300;
-  color: #424242;
-}
-
 .card-mov .inferior {
   display: flex;
+  align-items: center;
 }
 
 .card-mov .inferior .tag {
@@ -58,7 +56,7 @@
 }
 
 .card-mov .inferior .tag.verde {
-  background-color: rgba(13, 3, 255, 67%);
+  background-color: rgba(13, 3, 255, 0.67);
 }
 
 .opcoes-card {
@@ -77,6 +75,69 @@
 
 .opcoes-card span.ativo {
   color: #552dfb;
+}
+
+/* dropdown */
+.dropdown,
+.dropdown  button {
+  appearance: none;
+  border: none;
+  background: none;
+}
+
+.dropdown {
+  position: relative;
+  outline-width: 0;
+  outline-color: transparent;
+}
+
+.dropdown:focus {
+  color: #552dfb;
+}
+
+.icone-mais {
+  color: #333333;
+}
+
+.dropdown-opcoes {
+  display: none;
+  position: absolute;
+  right: 0;
+  border: 1px solid lightgray;
+  min-width: 120px;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 3px;
+  animation: scale .1s;
+  z-index: 10;
+}
+
+.dropdown-opcoes.limite-altura {
+  top: -74px;
+}
+
+.dropdown-opcoes .opcoes-button {
+  font-family: "Roboto", sans-serif;
+  padding: 10px;
+  min-width: 120px;
+  transition: .3s;
+  outline-color: transparent;
+  outline-width: 0;
+  cursor: pointer;
+}
+
+.dropdown-opcoes .opcoes-button:focus {
+  color: #fff !important;
+  background: #552dfb !important;
+}
+
+.dropdown-opcoes .opcoes-button:hover {
+  background: #f4f4f4;
+}
+
+.dropdown:focus .dropdown-opcoes,
+.dropdown:active .dropdown-opcoes{
+  display: block;
 }
 
 

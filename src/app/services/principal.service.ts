@@ -43,4 +43,16 @@ export class PrincipalService {
   async alterarStatusMovimentacao(novoStatus: number, movimentacao: Movimentacao): Promise<any> {
     return this.http.post(`${this.url}/alterarStatus`, {novoStatus, movimentacao}).toPromise();
   }
+
+  async deletarMovimentacao(movimentacao: Movimentacao): Promise<any> {
+    return this.http.delete(`${this.url}/${movimentacao.id}`).toPromise();
+  }
+
+  async buscarPorId(movimentacao: Movimentacao): Promise<any> {
+    return this.http.get(`${this.url}/movimentacoes/${movimentacao.id}`).toPromise();
+  }
+
+  async editarMovimentacao(movimentacao: Movimentacao): Promise<any> {
+    return this.http.post(`${this.url}/editar`, movimentacao).toPromise();
+  }
 }
