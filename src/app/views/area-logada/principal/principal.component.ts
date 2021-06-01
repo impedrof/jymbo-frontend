@@ -3,7 +3,7 @@ import { Movimentacao } from '../../../models/movimentacoes';
 import { PrincipalService } from '../../../services/principal.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {DatePipe, formatDate} from '@angular/common';
 import {ModalJymboComponent} from '../../shared/modal-jymbo/modal-jymbo.component';
@@ -240,6 +240,11 @@ export class PrincipalComponent implements OnInit {
       this.movimentacaoForm.controls.valor.markAsDirty();
     }
 
+    if (valor < 0) {
+      this.movimentacaoForm.controls.valor.setErrors({ incorrect: true });
+      this.movimentacaoForm.controls.valor.markAsDirty();
+    }
+
     if (!data) {
       this.movimentacaoForm.controls.data.setErrors({ required: true });
       this.movimentacaoForm.controls.data.markAsDirty();
@@ -311,6 +316,10 @@ export class PrincipalComponent implements OnInit {
     const formControl = group.controls[formName];
     if (formControl.hasError('required')) {
       return 'Campo obrigatório';
+    }
+
+    if (formControl.hasError('incorrect')) {
+      return 'Entre com valores válidos';
     }
   }
 

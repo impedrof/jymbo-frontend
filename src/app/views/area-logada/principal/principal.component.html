@@ -84,10 +84,10 @@
       </div>
     </div>
 
-    <div class="container-cadastro" *ngIf="!isMobile">
+    <div class="container-cadastro" *ngIf="!isMobile" [ngClass]="{ 'modal-open': modalIsOpen }">
       <div class="esquerdo">
         <div class="secao">
-          <div class="cadastro-fixo" [ngClass]="{ 'modal-open': modalIsOpen }">
+          <div class="cadastro-fixo">
             <div class="titulo-secao">
               <h3>Adicionar Movimentação</h3>
             </div>
