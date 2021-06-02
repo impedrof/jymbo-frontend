@@ -168,7 +168,6 @@ export class PrincipalComponent implements OnInit {
   async buscarMovPorMes(idUsuario, data): Promise<void> {
     await this.principal.buscarMovimentacoesPorMes(idUsuario, data).subscribe((mov: Movimentacao[]) => {
       this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
-      console.log(this.listaDeMovimentacoes);
       this.resetarValorMovimentacoesMensais();
       this.mesReceitas = this.listaDeMovimentacoes.map(movi => movi?.tipo === 1 ? movi.valor : 0)
         .reduce((total, valorAtual) => total + valorAtual, 0);
@@ -270,7 +269,6 @@ export class PrincipalComponent implements OnInit {
     }
 
     const novaMov = new Movimentacao(null, tipo, descricao, valor, data, this.user.id);
-    console.log(novaMov);
     this.principal.cadastrarMovimentacao(novaMov).subscribe(response => {
       if (response) {
         this.getDataAtual();
