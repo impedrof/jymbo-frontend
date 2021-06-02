@@ -21,7 +21,7 @@ export class Movimentacao {
     this.tipo = tipo;
     this.descricao = descricao;
     this.valor = valor;
-    this.data = data;
+    this.data = new Date(data);
     this.dataFormatada = this.formatarData(data);
     this.usuarioId = usuarioId;
     this.status = status;

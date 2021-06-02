@@ -76,6 +76,12 @@ export class PrincipalComponent implements OnInit {
   }
 
   mascaraDataAtual(data?: any): string {
+    const stringData = this.formatarData(data, true);
+    const novaData = new Date(stringData);
+    return novaData.toISOString().substring(0, 19);
+  }
+
+  formatarData(data?: any, gmt?: boolean) {
     const atualData = data ? new Date(data) : new Date();
     const yyyy = atualData.getFullYear();
     const MM = atualData.getMonth() + 1;
@@ -83,10 +89,11 @@ export class PrincipalComponent implements OnInit {
     const hh = atualData.getHours();
     const mm = atualData.getMinutes();
     const ss = atualData.getSeconds();
+    return gmt ? `${yyyy}/${MM}/${dd} ${hh}:${mm}:${ss} GMT` : `${yyyy}/${MM}/${dd} ${hh}:${mm}:${ss}`
+  }
 
-    const stringData = `${yyyy}/${MM}/${dd} ${hh}:${mm}:${ss} GMT`;
-    const novaData = new Date(stringData);
-    return novaData.toISOString().substring(0, 19);
+  getDataAtual(): void {
+    this.dataAtual = new Date(this.formatarData(null, false));
   }
 
   abrirModal(tipo: string, mov?: Movimentacao): void {
@@ -140,7 +147,9 @@ export class PrincipalComponent implements OnInit {
 
   async buscarTodasMov(idUsuario): Promise<void> {
     await this.principal.buscarTodasMovimentacoes(idUsuario).subscribe((mov: Movimentacao[]) => {
+
       const novaLista = Movimentacao.instanciarArrayMovimentacao(mov);
+
       this.resetarValorMovimentacoesTotais();
       this.totalReceita = novaLista.map((movi: Movimentacao) => movi?.tipo === 1 && movi?.status === 1 ? movi.valor : 0)
         .reduce((t, vA) => t + vA, 0);
@@ -159,6 +168,7 @@ export class PrincipalComponent implements OnInit {
   async buscarMovPorMes(idUsuario, data): Promise<void> {
     await this.principal.buscarMovimentacoesPorMes(idUsuario, data).subscribe((mov: Movimentacao[]) => {
       this.listaDeMovimentacoes = Movimentacao.instanciarArrayMovimentacao(mov);
+      console.log(this.listaDeMovimentacoes);
       this.resetarValorMovimentacoesMensais();
       this.mesReceitas = this.listaDeMovimentacoes.map(movi => movi?.tipo === 1 ? movi.valor : 0)
         .reduce((total, valorAtual) => total + valorAtual, 0);
@@ -196,10 +206,6 @@ export class PrincipalComponent implements OnInit {
     });
     this.dataMovimentacao = '';
 
-  }
-
-  getDataAtual(): void {
-    this.dataAtual = new Date();
   }
 
   logout(): void {
@@ -264,6 +270,7 @@ export class PrincipalComponent implements OnInit {
     }
 
     const novaMov = new Movimentacao(null, tipo, descricao, valor, data, this.user.id);
+    console.log(novaMov);
     this.principal.cadastrarMovimentacao(novaMov).subscribe(response => {
       if (response) {
         this.getDataAtual();
