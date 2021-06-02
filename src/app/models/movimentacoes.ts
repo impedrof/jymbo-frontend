@@ -44,7 +44,7 @@ export class Movimentacao {
 
   formatarData(data: Date): string {
     const dataConvertida = new Date(String(data).replace('T00:00:00.000Z', ''));
-    let dd = String(dataConvertida.getUTCDate());
+    let dd = dataConvertida.toLocaleString('default', { day: '2-digit'});
     const mm = dataConvertida.toLocaleString('default', { month: 'long' });
     const yyyy = dataConvertida.getFullYear();
     if (dd.length < 2) {
